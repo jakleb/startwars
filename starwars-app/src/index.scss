@@ -1,3 +1,7 @@
+@import "mixins.scss";
+@import "./components-styles/app-header.scss";
+@import "./components-styles/search.scss";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -30,3 +34,81 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #545353;
 }
+
+.App {
+  font-family: "Calibri";
+  text-align: center;
+  height: inherit;
+}
+
+.main-container{
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  overflow: auto;
+  align-content: flex-start;
+  @include mobile{
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+}
+
+.app-wrapper{
+  height: 100%;
+}
+
+.pagination {
+  display: flex;
+  list-style-type: none !important;
+  background-color: #d8d3d3;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0px;
+  margin-block: 0;
+
+  > li {
+      color: #484545;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      font-size: 16px;
+      transition: background-color .2s ease-in;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #d2bfbf;
+      }
+
+      > a{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+  .active {
+      background-color: #d8b87f;
+      border-color: #8e8c8c;
+  }
+
+  .previous, .next {
+    display: flex;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
