@@ -1,5 +1,6 @@
 @import "mixins.scss";
 @import "./components-styles/app-header.scss";
+@import "./components-styles/character-card.scss";
 @import "./components-styles/search.scss";
 
 body {
@@ -11,6 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
+}
+
+#root{
+  height: inherit;
 }
 
 code {

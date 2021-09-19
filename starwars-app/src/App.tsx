@@ -3,6 +3,7 @@ import './App.scss';
 import { ApolloClient, HttpLink, ApolloProvider, from, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { StarWarsContainer } from './Components/StarWarsContainer';
+import { BrowserRouter as Router } from "react-router-dom";
 
 const errorLink = onError(({graphQLErrors, networkError}) => {
   if(graphQLErrors){
@@ -12,7 +13,7 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
   }
 })
 
-const GQL_Uri = 'http://localhost:58943';
+const GQL_Uri = 'http://localhost:55746';
 
 const link = from([errorLink, new HttpLink({ uri: GQL_Uri})]);
 
@@ -25,7 +26,9 @@ function App() {
   return (
     <ApolloProvider client={client} >
     <div className="App">
-      <StarWarsContainer />
+      <Router>
+        <StarWarsContainer />
+      </Router>
     </div>
     </ApolloProvider>
   );

@@ -1,3 +1,8 @@
+import { Match } from "@testing-library/dom";
+
+export interface QueryPeople {
+    allPeople: People;
+}
 export interface People {
     pageInfo: any
     edges: any;
@@ -22,6 +27,10 @@ export interface Person {
     created: string;
     edited: string;
     id: string;
+  }
+
+  export interface UrlMatch {
+      match: { params: { pageid: string } };
   }
 
 

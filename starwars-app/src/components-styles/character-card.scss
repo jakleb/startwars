@@ -1,0 +1,73 @@
+.star-wars-card {
+    display: flex;
+    flex-basis: 33%;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+      @include tablet{
+      flex-basis: 49%;
+    }
+  }
+  
+  .content-wrapper {
+    display: flex;
+    border: 1px solid #c3bebe;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-direction: column;
+    border-color: "#c3bebe";
+  }
+  
+  .character-basic-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .character-details > a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .details-text {
+    display: inline-flex;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .card-header {
+    display: flex;
+    font-size: 30px;
+    color: #449abb;
+    width: 100%;
+  }
+  
+  .character-name{
+    display: flex;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+  
+  .header-spacer{
+    display: flex;
+    flex-shrink: 0;
+    flex-basis: 10px;
+  }
+  
+  .header-star-container{
+    @extend .header-spacer;
+    position: relative;
+  
+    .favorite-icon {
+      position: absolute;
+      right: 5px;
+      top:5px;
+      transition: transform .2s ease-in;
+  
+      &:hover{
+        transform: scale(1.3);
+      }
+    }
+  }
