@@ -1,0 +1,49 @@
+$success-color: #189818 !default;
+$favorite-yellow: #d0c438 !default;
+$light-gray: #c3bebe !default;
+$conter-red: #bb1010 !default;
+
+$wrn-color:#ead82c !default;
+$wrn-dark-color: #d8bf52!default;
+
+$error-dark-color: #980c0c!default;
+
+.custom-btn{
+    border-radius: 5px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    border: 2px solid transparent;
+    color: white;
+    transition: background-color .2s ease;
+    margin: 3px;
+    font-size: 12px;
+  
+    &:hover{
+      cursor: pointer;
+    }
+  
+    &:focus{
+      outline: none;
+    }
+  }
+  
+  .custom-warning-btn{
+    @extend .custom-btn;
+    background-color: $wrn-color;
+    border-color: $wrn-dark-color;
+  
+    &:hover{
+      background-color: $wrn-dark-color;
+    }
+  }
+  
+  .custom-error-btn{
+    @extend .custom-btn;
+    background-color:$conter-red;
+    border-color: $error-dark-color;
+  
+    &:hover{
+      background-color: $error-dark-color;
+    }
+  }

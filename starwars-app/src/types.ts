@@ -1,4 +1,4 @@
-import { Match } from "@testing-library/dom";
+import { MouseEvent } from "react";
 
 export interface QueryPeople {
     allPeople: People;
@@ -36,6 +36,19 @@ export interface Person {
 
   export interface UrlMatch {
       match: { params: { pageid: string } };
+  }
+
+  export enum ButtonKind {
+    success = "custom-success-btn",
+    error = "custom-error-btn",
+    warning = "custom-warning-btn",
+    primary = "custom-primary-btn"
+  }
+
+  export interface ButtonProps {
+    caption: string;
+    click: (e: MouseEvent<HTMLButtonElement>) => void;
+    kind: ButtonKind;
   }
 
 

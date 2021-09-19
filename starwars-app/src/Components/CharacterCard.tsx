@@ -3,12 +3,38 @@ import { Person } from "../types";
 import { BiStar } from "react-icons/bi";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { CardDetail } from "./CardDetail";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators, State } from "../state/index";
 
 export const CharacterCard = (props: Person): JSX.Element => {
 
+  const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const { addToFavorities, removeFromFavorities } = bindActionCreators(actionCreators,dispatch);
+
+  let state = useSelector((state: State) => state.bank);
+
   const onGoToDetail = () => {};
 
-  const onAddToFavourites = (e: MouseEvent<SVGAElement>) => {};
+  useEffect(() => {
+    const isFavoriteInState = state.findIndex(
+      (character) => character.name === props.name
+    );
+    setIsFavourite(isFavoriteInState !== -1 ?? false);
+  }, [state, props]);
+
+  useEffect(() => {}, [isFavourite]);
+
+  const onAddToFavourites = (e: MouseEvent<SVGAElement>) => {
+    setIsFavourite(!isFavourite);
+    if (isFavourite) {
+      removeFromFavorities({ ...props });
+    } else {
+      addToFavorities({ ...props });
+    }
+    console.log("Ulubine", state);
+  };
 
   return (
     <div className={"star-wars-card"}>
@@ -21,7 +47,7 @@ export const CharacterCard = (props: Person): JSX.Element => {
               onClick={onAddToFavourites}
               className="favorite-icon"
               data-for="happyFace"
-              color={"#c3bebe"}
+              color={isFavourite ? "#d0c438" : "#c3bebe"}
               size={"25px"}
             />
           </div>

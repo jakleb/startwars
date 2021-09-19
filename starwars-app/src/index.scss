@@ -2,6 +2,10 @@
 @import "./components-styles/app-header.scss";
 @import "./components-styles/character-card.scss";
 @import "./components-styles/search.scss";
+@import "./components-styles/card-detail.scss";
+@import "./components-styles/button.scss";
+@import "./components-styles/favorite-modal.scss";
+
 
 body {
   margin: 0;
@@ -12,7 +16,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
+  // background-image: url("/img/background.jpg");
+  // background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
 }
+
 
 #root{
   height: inherit;
