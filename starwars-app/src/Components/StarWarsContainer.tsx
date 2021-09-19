@@ -3,6 +3,7 @@ import { AppHeader } from "./AppHeader";
 import { CharacterList } from "./CharacterList";
 import { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
+import { ContactForm } from "./ContactForm";
 
 export const StarWarsContainer = () => {
   const [searchValue, setSerchValue] = useState<string>("");
@@ -14,6 +15,8 @@ export const StarWarsContainer = () => {
           {() => <Redirect to="/page/1" />}
         </Route>
         <Route path="/page/:pageid" component={CharacterList} />
+        <Route path="/contact" component={ContactForm}></Route>
+        <Route path="/favorities" component={CharacterList}></Route>
     </div>
   );
 };

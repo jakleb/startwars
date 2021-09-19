@@ -2,6 +2,7 @@ import React, { MouseEvent, useContext, useEffect, useState } from "react";
 import { Person } from "../types";
 import { BiStar } from "react-icons/bi";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import { CardDetail } from "./CardDetail";
 
 export const CharacterCard = (props: Person): JSX.Element => {
 
@@ -26,8 +27,11 @@ export const CharacterCard = (props: Person): JSX.Element => {
           </div>
         </div>
         <div className="character-basic-info-container">
-          <div>
-          </div>
+        {Object.entries(props)
+            .slice(1, 4)
+            .map((detail, index) => (
+              <CardDetail key={index} caption={detail[0]} value={detail[1]} />
+            ))}
           <div className="character-details">
             <div className="details-text" onClick={onGoToDetail}>
               Details

@@ -5,6 +5,10 @@ query {
     allPeople(first: ${first}, last: ${last}) {
       people {
         name
+        height
+        mass
+        hairColor
+        skinColor
       }
     }
   }

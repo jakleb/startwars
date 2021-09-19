@@ -1,6 +1,6 @@
 .star-wars-card {
     display: flex;
-    flex-basis: 33%;
+    flex-basis: 33.33%;
     flex-direction: column;
     box-sizing: border-box;
     padding: 10px;
@@ -23,17 +23,42 @@
   .character-basic-info-container {
     display: flex;
     flex-direction: column;
-  }
-  .character-details > a {
-    text-decoration: none;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .details-text {
-    display: inline-flex;
-    font-family: Arial, Helvetica, sans-serif;
+
+
+
+    .character-details {
+        // border: 2px solid #6db96d;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // padding: 2px;
+        // border-radius: 5px;
+        // background-color: #a2e8a2;
+        // color: #096909;
+        // font-family: Arial, Helvetica, sans-serif;
+        // width: 100px;
+
+        border: 2px solid #119611;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
+        border-radius: 5px;
+        background-color: #42ad42;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100px;
+        margin: 10px 0px;
+        align-self: center;
+    
+        > a {
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
   }
   
   .card-header {

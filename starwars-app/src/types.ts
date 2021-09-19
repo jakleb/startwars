@@ -29,6 +29,11 @@ export interface Person {
     id: string;
   }
 
+  export interface FieldDetail {
+      caption: string;
+      value: string;
+  }
+
   export interface UrlMatch {
       match: { params: { pageid: string } };
   }

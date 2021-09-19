@@ -2,6 +2,7 @@ import "./../index.scss";
 import {Search} from './Search';
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { ContactForm } from "./ContactForm";
 
 export const AppHeader = (): JSX.Element => {
   return (
@@ -10,6 +11,7 @@ export const AppHeader = (): JSX.Element => {
       <div className="app-header-favourite-container">
         <Link to="/page/1">Characters</Link>
         <Link to="/contact">Contact</Link>
+        <Link to="/favorities">Favorities</Link>
         <div className="app-header-favorite-icon">
           <FaStar color={"#d0c438"} size={"25px"} />
         </div>
