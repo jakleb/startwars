@@ -1,0 +1,45 @@
+.form-wrapper{
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    form{
+        width: 50%;
+        
+        .controls-wrapper{
+            .control-wrapper{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding-bottom: 10px;
+        
+                label{
+                    display: flex;
+                    justify-self: flex-start;
+                    font-weight: 600;
+                }
+            
+                input[type="text"], input[type="email"], input[type="tel"]{
+                    height: 25px;
+                    border-radius: 4px;
+                    outline: none;
+                    border: 1px solid red;
+                    width: 250px;
+                    padding: 3px;
+                }
+            
+                input[type="checkbox"]{
+            
+                }
+        
+                textarea{
+                    @extend input[type="text"];
+                    height: 60px;
+                    resize: none;
+                }
+            }
+        }
+    }
+}

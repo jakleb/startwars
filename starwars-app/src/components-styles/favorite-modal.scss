@@ -1,6 +1,5 @@
 .modal-wrapper{
     position: fixed;
-    right: 30px;
     top: 40px;
     z-index: 200;
     width: 200px;
@@ -16,6 +15,21 @@
       align-items: center;
       justify-content: center;
     }
+  }
+
+  .animation-container-enter {
+    right: -205px;
+  }
+  .animation-container-enter-active {
+    right: 40px;
+    transition: right 300ms;
+  }
+  .animation-container-exit {
+    opacity: 1;
+  }
+  .animation-container-exit-active {
+    right: -205px;
+    transition: right 300ms;
   }
   
   .favorities-modal {
@@ -91,8 +105,9 @@
     }
   }
   
-  .modal-content-conteiner > .empty-favorities-list {
+  .favorities-modal-content-conteiner > .empty-favorities-list {
     align-items: center;
     justify-content: center;
     color: #848256;
   }
+

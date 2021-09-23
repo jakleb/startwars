@@ -1,5 +1,5 @@
 import { Person } from "../../types";
-import { Action, FavoriteActionType } from "../types";
+import { FavoriteAction, ALLAction, FavoriteActionType, AppAction, AllActionType, AppState } from "../types";
 
 const FavoriteStorageKey = "FAVORITESTATE";
 const { localStorage } = window;
@@ -8,49 +8,67 @@ const saveToStorage = (favorities: Person[]) => {
   localStorage.setItem(FavoriteStorageKey, JSON.stringify(favorities));
 };
 
-const initialState = JSON.parse(
-  localStorage.getItem(FavoriteStorageKey) || "[]"
-);
+const initialState = { all: [], favorites: JSON.parse(localStorage.getItem(FavoriteStorageKey) || "[]")};
 
-saveToStorage(initialState);
+saveToStorage(initialState.favorites);
 
-const addFavorite = (state: Person[], payload: Person) => {
-  const newState = [...state];
-  const isFavorite = newState.find((character) => character.name === payload.name);
+const addFavorite = (state: AppState, payload: Person) => {
+  const { favorites } = state;
+  const newFavorites = [...favorites];
+  const isFavorite = newFavorites.find((character) => character.name === payload.name);
 
   if (!isFavorite) 
-    newState.push(payload);
+    newFavorites.push(payload);
 
-  saveToStorage(newState);
-  return newState;
+  saveToStorage(newFavorites);
+  state.favorites = newFavorites;
+  return {...state};
 };
 
-const removeFavorite = (
-  state: Person[],
-  payload: Person
-) => {
-  const newState = [...state];
-  const index = newState.findIndex(
-    (character) => character.name === payload.name
-  );
+const removeFavorite = (state: AppState, id: string) => {
+  const { favorites } = state;
+  const newFavorites = [...favorites];
+  const index = newFavorites.findIndex((character) => character.id === id);
+
+  if (index !== -1) 
+    newFavorites.splice(index, 1);
+
+  saveToStorage(newFavorites);
+  state.favorites = newFavorites;
+  return {...state};
+};
+
+const removeAllFavorities = (state: AppState) => {
+  const { favorites } = state;
+  const newFavorites = [...favorites];
+  newFavorites.length = 0;
+  saveToStorage(newFavorites);
+  state.favorites = newFavorites;
+  return {...state};
+};
+
+const getAll = (state: AppState) => {
+  return state;
+}
+
+const setAll = (state: AppState, people: Person[]) => {
+  const newAll = people;
+  state.all = newAll;
+  return {...state};
+}
+
+const getPersonByID = (state: AppState, id: string) => {
+  const { all } = state;
+  const newAll = [...all];
+  const index = newAll.findIndex((character) => character.id === id);
   if (index !== -1) {
-    newState.splice(index, 1);
+    newAll.splice(index, 1);
   }
-  saveToStorage(newState);
-  return newState;
-};
+  state.all = newAll;
+  return {...state};
+}
 
-const removeAllFavorities = (state: Person[]) => {
-  const newState = [...state];
-  newState.length = 0;
-  saveToStorage(newState);
-  return newState;
-};
-
-const reducer = (
-  state: Person[] = initialState,
-  action: Action
-) => {
+const reducer = (state: AppState = initialState, action: AppAction) => {
   switch (action.type) {
     case FavoriteActionType.Add:
       return addFavorite(state, action.payload);
@@ -58,6 +76,12 @@ const reducer = (
       return removeFavorite(state, action.payload);
     case FavoriteActionType.RemoveAll:
       return removeAllFavorities(state);
+    case AllActionType.GETALL:
+      return getAll(state);
+    case AllActionType.SETALL:
+      return setAll(state, action.payload);
+    case AllActionType.GETONE:
+      return getPersonByID(state, action.payload);
     default:
       return state;
   }

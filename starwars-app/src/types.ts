@@ -4,9 +4,6 @@ export interface QueryPeople {
     allPeople: People;
 }
 export interface People {
-    pageInfo: any
-    edges: any;
-    totalCount: number;
     people: Person[];
 }
 
@@ -20,14 +17,32 @@ export interface Person {
     mass: number;
     skinColor: string;
     homeworld: any;
-    films: [];
-    species: [];
-    starships: [];
-    vehicles: [];
-    created: string;
-    edited: string;
+    _tech_films: Films;
+    species: Species;
     id: string;
   }
+
+  export interface HomeWorld{
+    name?: string;
+    diameter: number;
+    gravity: string;
+    population: number;
+  }
+
+  export interface Species{
+    name: string;
+    language: string;
+  }
+
+  export interface Films{
+    films:Film[];
+  }
+
+  export interface Film{
+    title: string;
+    description: string;
+  }
+  
 
   export interface FieldDetail {
       caption: string;
@@ -35,7 +50,7 @@ export interface Person {
   }
 
   export interface UrlMatch {
-      match: { params: { pageid: string } };
+      match: { params: { pageid: string; personid: string } };
   }
 
   export enum ButtonKind {
@@ -49,6 +64,10 @@ export interface Person {
     caption: string;
     click: (e: MouseEvent<HTMLButtonElement>) => void;
     kind: ButtonKind;
+  }
+
+  export interface PageChangeType{
+    selected: number
   }
 
 

@@ -1,73 +1,61 @@
 import "./../index.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { People, Person, QueryPeople, UrlMatch } from "../types";
+import { PageChangeType, People, Person, QueryPeople, UrlMatch } from "../types";
 import { useQuery, gql, UriFunction } from "@apollo/client";
 import { LOAD_STARWARS_CHARACTERS } from "../GraphQL/Queries";
 import {CharacterCard} from "./CharacterCard";
+import { useHistory, useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators, State } from "../state";
+import { bindActionCreators } from "redux";
+import { useStarWarsApi, useRouter } from "../CustomHooks/hooks";
 
-const useNavigate = (pageNumber: number):People => {
-  const [currentQueryPeople, setCurrentQueryPeople] = useState<QueryPeople>();
-  const {error, loading, data} = useQuery<QueryPeople>(LOAD_STARWARS_CHARACTERS(pageNumber * 10));
 
-  useEffect(() => {
-    if(error){
-      console.log(`Error! ${error}`)
-    }
-
-    if(data?.allPeople){
-      setCurrentQueryPeople(data)
-    }
-    
-  }, [pageNumber]);
-
-   return data?.allPeople || {} as People;
-}
 
 const renderCharacterCard = (results: Person[]) => {
   let people: JSX.Element[] = [];
 
   results?.forEach((person, index) => {
     const { name, height, mass, gender, birthYear } = person;
-    const swPerson = <CharacterCard key={index} {...person} />;
+    const swPerson = 
+      <CharacterCard key={index} {...person} />
     people.push(swPerson);
   });
   return people;
 };
 
 const getPageCount = (pageId: string, totalCount: number): number => {
-  const MAX_CHARACTERS_ON_SITE = 10;
+  const _10_ON_SITE = 10;
   const pageIdNumber = Number.parseInt(pageId, 10);
 
-  return (pageIdNumber * MAX_CHARACTERS_ON_SITE < totalCount && 
-    (pageIdNumber * MAX_CHARACTERS_ON_SITE > totalCount
-       && (pageIdNumber * MAX_CHARACTERS_ON_SITE - totalCount > MAX_CHARACTERS_ON_SITE))) ? pageIdNumber : 1;
+  return (pageIdNumber * _10_ON_SITE < totalCount && 
+    (pageIdNumber * _10_ON_SITE > totalCount
+       && (pageIdNumber * _10_ON_SITE - totalCount > _10_ON_SITE))) ? pageIdNumber : 1;
 }
 
-export const CharacterList = (props: UrlMatch) => {
-  const {match} = props;
+export const CharacterList = ({match}: UrlMatch) => {
+
   const pageId = match?.params?.pageid;
+  useStarWarsApi(Number.parseInt(pageId,10));
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+  const { all } = useSelector((state: State) => state.bank);
   const [characters, setCharacters] = useState<Person[]>([] as Person[]);
-  const MAX_CHARACTERS_ON_SITE = 10;
-
-  const { pageInfo, people, edges, totalCount } = useNavigate(Number.parseInt(pageId,10));
-  
-  let pageCount = getPageCount(pageId, totalCount);
 
   useEffect(() => {
-    if(people?.length){
-      setCharacters(people)
+    if(all?.length){
+      console.log(all)
+      setCharacters(all)
     }
-  },[people]);
+  },[all]);
 
-  useEffect(() => {
-    pageCount = getPageCount(pageId, totalCount);
-  }, [characters]);
 
-  useEffect(() => {}, [pageCount])
-
-  const onPageChange = () => {} 
+  const onPageChange = ({ selected }:PageChangeType) => {
+    router.push(`/page/${selected + 1}`);
+  };
 
   return (
     <div className="main-container">
@@ -82,7 +70,7 @@ export const CharacterList = (props: UrlMatch) => {
           nextLabel={<BiChevronRight />}
           breakLabel={"..."}
           breakClassName={"break-me"}
-          pageCount={pageCount}
+          pageCount={characters && characters.length ? Math.ceil(characters.length / 10) : 0}
           marginPagesDisplayed={1}
           pageRangeDisplayed={3}
           onPageChange={onPageChange}

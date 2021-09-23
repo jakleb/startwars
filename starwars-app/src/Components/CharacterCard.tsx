@@ -6,42 +6,50 @@ import { CardDetail } from "./CardDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state/index";
+import { useRouter } from "../CustomHooks/hooks";
+import { CSSTransition } from 'react-transition-group';
 
-export const CharacterCard = (props: Person): JSX.Element => {
-
+export const CharacterCard = (props: Person) => {
+  const { name, id } = props;
+  const [person, setPerson] = useState<Person>(props);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { addToFavorities, removeFromFavorities } = bindActionCreators(actionCreators,dispatch);
 
-  let state = useSelector((state: State) => state.bank);
+  const router = useRouter();
 
-  const onGoToDetail = () => {};
+  let { favorites } = useSelector((state: State) => state.bank);
+
+  const onGoToDetail = () => {
+    router.push(`/detail/${id}`)
+  };
 
   useEffect(() => {
-    const isFavoriteInState = state.findIndex(
-      (character) => character.name === props.name
+    const isFavoriteInState = favorites.findIndex(
+      (character) => character.name === name
     );
     setIsFavourite(isFavoriteInState !== -1 ?? false);
-  }, [state, props]);
+  }, [favorites, props]);
 
   useEffect(() => {}, [isFavourite]);
 
   const onAddToFavourites = (e: MouseEvent<SVGAElement>) => {
     setIsFavourite(!isFavourite);
     if (isFavourite) {
-      removeFromFavorities({ ...props });
+      removeFromFavorities(id);
     } else {
       addToFavorities({ ...props });
     }
-    console.log("Ulubine", state);
+    console.log("Ulubine", favorites);
   };
 
   return (
     <div className={"star-wars-card"}>
+       <CSSTransition in={!!props} classNames="card" timeout={300} unmountOnExit>
       <div className="content-wrapper" >
         <div className="card-header">
           <div className="header-spacer"></div>
-          <div className="character-name">{props.name}</div>
+          <div className="character-name">{name}</div>
           <div className="header-star-container">
             <BiStar
               onClick={onAddToFavourites}
@@ -53,11 +61,11 @@ export const CharacterCard = (props: Person): JSX.Element => {
           </div>
         </div>
         <div className="character-basic-info-container">
-        {Object.entries(props)
+        {/* {Object.entries(props)
             .slice(1, 4)
             .map((detail, index) => (
               <CardDetail key={index} caption={detail[0]} value={detail[1]} />
-            ))}
+            ))} */}
           <div className="character-details">
             <div className="details-text" onClick={onGoToDetail}>
               Details
@@ -66,6 +74,7 @@ export const CharacterCard = (props: Person): JSX.Element => {
           </div>
         </div>
       </div>
+      </CSSTransition>
     </div>
   );
 };

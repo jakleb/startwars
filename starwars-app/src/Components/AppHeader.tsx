@@ -13,9 +13,7 @@ export const AppHeader = (): JSX.Element => {
 
   const [favoritiesModalIsShown, setFavoritiesModalIsShown] = useState<boolean>(false);
 
-  const state: Person[] = useSelector(
-    (state: State) => state.bank
-  );
+  const {favorites} = useSelector((state: State) => state.bank);
 
   const hideModal = () => {
     setFavoritiesModalIsShown(false);
@@ -23,7 +21,7 @@ export const AppHeader = (): JSX.Element => {
 
   useEffect(() => {
     console.log(favoritiesModalIsShown)
-  }, [state, favoritiesModalIsShown]);
+  }, [favorites, favoritiesModalIsShown]);
 
   return (
     <div className="app-header">
@@ -36,7 +34,7 @@ export const AppHeader = (): JSX.Element => {
           className="app-header-favorite-icon" 
           onClick={() => { setFavoritiesModalIsShown(true) }}>
           <FaStar color={"#d0c438"} size={"25px"} />
-          {!!state.length && (<div className={"state-counter"}>{state && state.length}</div>)}
+          {!!favorites?.length && (<div className={"state-counter"}>{favorites && favorites?.length}</div>)}
           {favoritiesModalIsShown && (<FavoriteModal hideModal={hideModal} isShown={favoritiesModalIsShown} /> )}
         </div>
       </div>
