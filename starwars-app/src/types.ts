@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { ChangeEvent, MouseEvent } from "react";
 
 export interface QueryPeople {
     allPeople: People;
@@ -68,6 +68,11 @@ export interface Person {
 
   export interface PageChangeType{
     selected: number
+  }
+
+  export interface ISearchContext {
+    value: string;
+    onSearchTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
   }
 
 

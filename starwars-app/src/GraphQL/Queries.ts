@@ -11,6 +11,7 @@ query{
       height
       mass
       skinColor
+      id
       homeworld {
         name
         diameter
