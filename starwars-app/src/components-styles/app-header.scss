@@ -39,5 +39,31 @@
               color: wheat;
             }
           }
+
+          .theme-mode-container{
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            border-radius: 4px;
+            background-color: #cfcfcf;
+            margin-right: 10px;
+
+            > div:first-child{
+              margin-right: 10px;
+            }
+            .light, .dark{
+              border-radius: 4px;
+              padding: 2px;
+            }
+
+            .light{
+              background-color: white;
+              color:black;
+            }
+            .dark{
+              background-color: black;
+              color:white;
+            }
+          }
       }
   }

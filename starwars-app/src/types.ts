@@ -1,4 +1,5 @@
-import { ChangeEvent, MouseEvent } from "react";
+import { ChangeEvent, MouseEvent, Props } from "react";
+import { JsxElement } from "typescript";
 
 export interface QueryPeople {
     allPeople: People;
@@ -49,6 +50,11 @@ export interface Person {
       value: string;
   }
 
+  export interface FieldDetailList {
+    caption: string;
+    value: FieldDetail[];
+}
+
   export interface UrlMatch {
       match: { params: { pageid: string; personid: string } };
   }
@@ -73,6 +79,11 @@ export interface Person {
   export interface ISearchContext {
     value: string;
     onSearchTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  }
+
+  export enum ThemeKind {
+    Dark = "theme-dark",
+    Light = "theme-light",
   }
 
 

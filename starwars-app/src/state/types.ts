@@ -1,8 +1,9 @@
-import { Person } from "../types";
+import { Person, ThemeKind, ThemeProps } from "../types";
 
 export interface AppState{
   all: Person[];
   favorites: Person[];
+  theme: ThemeKind;
 }
 
 export enum FavoriteActionType {
@@ -16,20 +17,40 @@ export enum AllActionType{
   GETALL = "GETALL",
   SETALL = "SETALL",
   GETONE = "GETONE",
+  GETPAGE = "GETPAGE",
+  FINDBYSEARCH = "FINDBYSEARCH"
 }
 
-interface GetALL{
+export enum ThemeActionType{
+  CHANGETHEME = "CHANGETHEME",
+}
+
+interface ChangeThemeAction{
+  type: ThemeActionType.CHANGETHEME;
+}
+
+interface GetALLAction{
   type: AllActionType.GETALL;
 }
 
-interface GetOne{
+interface GetOneAction{
   type: AllActionType.GETONE,
   payload: string;
 }
 
-interface SetAll{
+interface SetAllAction{
   type: AllActionType.SETALL,
   payload: Person[];
+}
+
+interface GetPageAction{
+  type: AllActionType.GETPAGE,
+  payload: number;
+}
+
+interface SearchAction{
+  type: AllActionType.GETPAGE,
+  payload: string;
 }
 
 interface AddFavoriteAction {
@@ -56,6 +77,6 @@ export type FavoriteAction =
   | ShowFavoriteAction
   | RemoveAllFavoritiesAction;
 
-  export type ALLAction = GetALL | GetOne | SetAll;
+  export type ALLAction = GetALLAction | GetOneAction | SetAllAction | SearchAction | GetPageAction;
 
-  export type AppAction = FavoriteAction | ALLAction;
+  export type AppAction = FavoriteAction | ALLAction | ChangeThemeAction;

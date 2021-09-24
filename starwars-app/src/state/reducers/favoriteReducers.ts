@@ -1,5 +1,6 @@
-import { Person } from "../../types";
-import { FavoriteAction, ALLAction, FavoriteActionType, AppAction, AllActionType, AppState } from "../types";
+import { getPackedSettings } from "http2";
+import { Person, ThemeKind } from "../../types";
+import { FavoriteAction, ALLAction, FavoriteActionType, AppAction, AllActionType, AppState, ThemeActionType } from "../types";
 
 const FavoriteStorageKey = "FAVORITESTATE";
 const { localStorage } = window;
@@ -8,7 +9,7 @@ const saveToStorage = (favorities: Person[]) => {
   localStorage.setItem(FavoriteStorageKey, JSON.stringify(favorities));
 };
 
-const initialState = { all: [], favorites: JSON.parse(localStorage.getItem(FavoriteStorageKey) || "[]")};
+const initialState = { all: [], favorites: JSON.parse(localStorage.getItem(FavoriteStorageKey) || "[]"), theme: ThemeKind.Light};
 
 saveToStorage(initialState.favorites);
 
@@ -68,6 +69,12 @@ const getPersonByID = (state: AppState, id: string) => {
   return {...state};
 }
 
+const changeTheme = (state: AppState) =>{
+  const { theme } = state;
+  state.theme = theme === ThemeKind.Light ? ThemeKind.Dark : ThemeKind.Light;
+  return {...state};
+}
+
 const reducer = (state: AppState = initialState, action: AppAction) => {
   switch (action.type) {
     case FavoriteActionType.Add:
@@ -82,6 +89,8 @@ const reducer = (state: AppState = initialState, action: AppAction) => {
       return setAll(state, action.payload);
     case AllActionType.GETONE:
       return getPersonByID(state, action.payload);
+    case ThemeActionType.CHANGETHEME:
+      return changeTheme(state);
     default:
       return state;
   }

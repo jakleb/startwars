@@ -1,9 +1,9 @@
 import { createContext } from "react";
 import { ISearchContext } from "./types";
 
-const context: ISearchContext = {
+const searchConext: ISearchContext = {
     value: "",
     onSearchTextChange: (value) => {}
   };
 
-  export const SearchContext = createContext(context);
+export const SearchContext = createContext(searchConext);

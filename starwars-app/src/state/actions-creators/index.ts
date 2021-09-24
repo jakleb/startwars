@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { Person } from "../../types";
-import { AllActionType, AppAction, FavoriteActionType } from "../types";
+import { AllActionType, AppAction, FavoriteActionType, ThemeActionType } from "../types";
 
 export const addAll = (people: Person[]) => {
   return (dispatch: Dispatch<AppAction>) => {
@@ -46,9 +46,7 @@ export const removeFromFavorities = (id: string) => {
   };
 };
 
-export const removeAllFromFavorities = (
-  characters: Person[]
-) => {
+export const removeAllFromFavorities = () => {
   return (dispatch: Dispatch<AppAction>) => {
     dispatch({
       type: FavoriteActionType.RemoveAll
@@ -60,6 +58,14 @@ export const showFavorities = () => {
   return (dispatch: Dispatch<AppAction>) => {
     dispatch({
       type: FavoriteActionType.Show
+    });
+  };
+};
+
+export const changeTheme = () => {
+  return (dispatch: Dispatch<AppAction>) => {
+    dispatch({
+      type: ThemeActionType.CHANGETHEME
     });
   };
 };

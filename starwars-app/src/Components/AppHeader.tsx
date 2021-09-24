@@ -5,15 +5,19 @@ import { Link } from "react-router-dom";
 import { ContactForm } from "./ContactForm";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State, store } from "../state/index";
-import { Person } from "../types";
-import { useEffect, useState } from "react";
+import { Person, ThemeKind } from "../types";
+import { useContext, useEffect, useState } from "react";
 import { FavoriteModal } from "./FavoriteModal";
+import { bindActionCreators } from "redux";
 
 export const AppHeader = (): JSX.Element => {
 
   const [favoritiesModalIsShown, setFavoritiesModalIsShown] = useState<boolean>(false);
 
-  const {favorites} = useSelector((state: State) => state.bank);
+  const dispatch = useDispatch();
+  const { changeTheme } = bindActionCreators(actionCreators,dispatch);
+  const {favorites, theme} = useSelector((state: State) => state.bank);
+
 
   const hideModal = () => {
     setFavoritiesModalIsShown(false);
@@ -24,9 +28,13 @@ export const AppHeader = (): JSX.Element => {
   }, [favorites, favoritiesModalIsShown]);
 
   return (
-    <div className="app-header">
+    <div className={`app-header`}>
       <Search />
       <div className="app-header-favourite-container">
+        <div className="theme-mode-container">
+          <div>Theme: </div>
+          <div className={`${theme === ThemeKind.Light ? "light" : "dark"}`} onClick={ () => { changeTheme()} }>{theme === ThemeKind.Light ? "Light" : "Dark" }</div>
+        </div>
         <Link to="/page/1">Characters</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/favorities">Favorities</Link>
@@ -41,3 +49,4 @@ export const AppHeader = (): JSX.Element => {
     </div>
   );
 };
+
