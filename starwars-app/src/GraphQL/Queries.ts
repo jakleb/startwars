@@ -16,8 +16,7 @@ query{
         name
         diameter
         gravity
-        population
-        
+        population  
       }
       species {
         name
@@ -27,18 +26,6 @@ query{
         films{
           title
           description: openingCrawl
-        }
-      }
-      _tech_starchiships:starshipConnection{
-        starships{
-          name
-          model
-        }
-      }
-      _tech_vechicles:vehicleConnection{
-        vehicles{
-          name
-          model
         }
       }
     }

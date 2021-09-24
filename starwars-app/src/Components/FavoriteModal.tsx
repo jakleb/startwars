@@ -59,7 +59,7 @@ export const FavoriteModal = ({isShown, hideModal}: FavoritiesModalProps) => {
             kind={ButtonKind.error}
           />
           <Button
-            click={(e: MouseEvent<HTMLButtonElement>) => { removeAllFromFavorities(favorites) }}
+            click={(e: MouseEvent<HTMLButtonElement>) => { removeAllFromFavorities() }}
             caption={"Remove all"}
             kind={ButtonKind.warning}
           />

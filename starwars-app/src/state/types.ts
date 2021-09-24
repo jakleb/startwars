@@ -1,4 +1,4 @@
-import { Person, ThemeKind, ThemeProps } from "../types";
+import { Person, ThemeKind } from "../types";
 
 export interface AppState{
   all: Person[];

@@ -26,9 +26,10 @@ export const StarWarsContainer = () => {
 
 
   return (
-      <div className={`app-wrapper ${theme}`}>
-        <SearchContext.Provider value={{ value: searchValue, onSearchTextChange: onSerchChange }}>
-          <AppHeader />
+    <div className={`app-wrapper ${theme}`}>
+      <SearchContext.Provider value={{ value: searchValue, onSearchTextChange: onSerchChange }}>
+        <AppHeader />
+        <div className="main-container">
           <Route exact path="/page/" component={CharacterList}>
             {() => <Redirect to="/page/1" />}
           </Route>
@@ -36,7 +37,8 @@ export const StarWarsContainer = () => {
           <Route path="/contact" component={ContactForm}></Route>
           <Route path="/favorities" component={CharacterList}></Route>
           <Route path="/detail/:personid" component={PersonDetail}></Route>
-        </SearchContext.Provider>
-      </div>
+        </div>
+      </SearchContext.Provider>
+    </div>
   );
 };

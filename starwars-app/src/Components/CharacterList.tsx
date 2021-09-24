@@ -8,14 +8,24 @@ import { useStarWarsApi, useRouter } from "../CustomHooks/hooks";
 import { SearchContext } from "../contexts";
 import { useSelector } from "react-redux";
 import { State } from "../state";
+import Loader from "./Loader";
 
 
 
 const renderCharacterCard = (results: Person[]) => {
   let people: JSX.Element[] = [];
 
-  results?.forEach((person, index) => {
-    const swPerson = <CharacterCard key={index} {...person} />
+  results?.forEach(({id, name, height, mass, hairColor, eyeColor, gender}, index) => {
+    const swPerson = <CharacterCard 
+                        key={index} 
+                        name={name} 
+                        id={id}
+                        height={height}
+                        mass={mass}
+                        hairColor={hairColor}
+                        eyeColor={eyeColor}
+                        gender={gender}
+                        />
     people.push(swPerson);
   });
   return people;
@@ -40,7 +50,6 @@ export const CharacterList = ({match}: UrlMatch) => {
 
   useEffect(() => {
     if(all?.length){
-      console.log(all);
       setTotalCount(all.length);
       if(pageId){
         const page = Number.parseInt(pageId, 10);
@@ -57,22 +66,19 @@ export const CharacterList = ({match}: UrlMatch) => {
     }
   }, [searchValue]);
 
-
-
-
   const onPageChange = ({ selected }:PageChangeType) => {
     searchValue ? setSearchPage(selected) : router.push(`/page/${selected + 1}`);
   };
 
   return (
-    <div className="main-container">
+    <>
       <div className="main-wrapper">
-      {characters.length &&
-          renderCharacterCard(characters)
+      {!!characters.length ?
+          renderCharacterCard(characters) : <Loader />
       }
       </div>
       <div className="commentBox">
-        { characters.length && <ReactPaginate
+        { !!characters.length && <ReactPaginate
           previousLabel={<BiChevronLeft />}
           nextLabel={<BiChevronRight />}
           breakLabel={"..."}
@@ -87,6 +93,6 @@ export const CharacterList = ({match}: UrlMatch) => {
           previousLinkClassName={"previous"}
         />}
       </div>
-    </div>
+    </>
   );
 };

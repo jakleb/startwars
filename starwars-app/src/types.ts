@@ -10,17 +10,17 @@ export interface People {
 
 export interface Person {
     name: string;
-    birthYear: string;
-    eyeColor: string;
-    gender: string;
-    hairColor: string;
-    height: number;
-    mass: number;
-    skinColor: string;
-    homeworld: any;
-    _tech_films: Films;
-    species: Species;
     id: string;
+    birthYear?: string;
+    eyeColor?: string;
+    gender?: string;
+    hairColor?: string;
+    height?: number;
+    mass?: number;
+    skinColor?: string;
+    homeworld?: HomeWorld[];
+    _tech_films?: Films;
+    species?: Species;
   }
 
   export interface HomeWorld{
