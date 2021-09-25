@@ -35,10 +35,7 @@ export const FavoriteModal = ({isShown, hideModal}: FavoritiesModalProps) => {
           {favorites.length ? (
             favorites.map((character, index) => (
               <div className="modal-row" key={index}>
-                <div
-                  className="modal-store-element"
-                  onClick={() => { goToDetail(character) }}
-                >
+                <div className="modal-store-element" onClick={() => { goToDetail(character) }}>
                   {character.name}
                 </div>
                 <div className="modal-row-action-container">

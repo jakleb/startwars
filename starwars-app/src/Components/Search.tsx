@@ -1,26 +1,35 @@
 import "./../index.scss";
-import { FaSistrix } from "react-icons/fa";
+import { FaSistrix,FaFilter } from "react-icons/fa";
 import { useContext } from "react";
 import { SearchContext } from "../contexts";
+import { FilteredField } from "../types";
 
 export const Search = () => {
 
-  const { value, onSearchTextChange } = useContext(SearchContext);
+  const { value, onSearchTextChange, filterBy, onFilterChange } = useContext(SearchContext);
 
   return (
-    <div className="search-component">
-      <div className="search-icon-wrapper">
-        <FaSistrix />
+    <>
+      <div className="search-component">
+        <div className="search-icon-wrapper">
+          <FaSistrix />
+        </div>
+        <div className="search-input-wrapper">
+          <input
+            className="search-input"
+            placeholder={filterBy}
+            type="text"
+            value={value}
+            onChange={onSearchTextChange}
+          />
+        </div>
       </div>
-      <div className="search-input-wrapper">
-        <input
-          className="search-input"
-          placeholder="Name"
-          type="text"
-          value={value}
-          onChange={onSearchTextChange}
-        />
+      <div className="filter-icon">
+        <FaFilter />
       </div>
-    </div>
+      <div onClick={() => { onFilterChange(FilteredField.Name) }}>Nazwa</div>
+      <div onClick={() => { onFilterChange(FilteredField.Homeworld) }}>HomeWorld</div>
+      <div onClick={() => { onFilterChange(FilteredField.Films) }}>Films</div>
+    </>
   );
 };

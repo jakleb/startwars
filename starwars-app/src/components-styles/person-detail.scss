@@ -1,0 +1,59 @@
+.person-detail{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    
+    .person-main-details, .person-additional-details{
+        margin: 20px;
+        padding: 20px;
+        padding-top: 5px;
+        border-radius: 8px;
+    
+        .details-section-title{
+            display: flex;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+    
+        .card-detail{
+            margin-bottom: 10px;
+    
+            .card-detail-value{
+                padding: 0px 5px;
+                border-radius: 3px;
+            }
+        }
+    }
+
+    .person-additional-details{
+        background-color: #f1e3b1;
+        .details-section-title{
+            color: #e9b420;
+        }
+
+        .card-detail-value{
+            background: #d3a013;
+            color: #f5efe3;
+        }
+    }
+
+    .person-main-details{
+        background: #d0f7f7;
+        .details-section-title{
+            color: #51aae9;
+        }
+
+        .card-detail-value{
+            background: #0a449b;
+            color: #f5efe3;
+        }
+    }
+}
+
+.details-wrapper{
+    display: flex;
+    flex-direction: row;
+    @include mobile{
+        flex-direction: column;
+    }
+}

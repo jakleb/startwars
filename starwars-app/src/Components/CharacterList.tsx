@@ -2,7 +2,7 @@ import "./../index.scss";
 import { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { PageChangeType, Person, UrlMatch } from "../types";
+import { FilteredField, PageChangeType, Person, UrlMatch } from "../types";
 import {CharacterCard} from "./CharacterCard";
 import { useStarWarsApi, useRouter } from "../CustomHooks/hooks";
 import { SearchContext } from "../contexts";
@@ -31,10 +31,23 @@ const renderCharacterCard = (results: Person[]) => {
   return people;
 };
 
-export const filterCharacters = (seachText: string, characters: Person[] = []): Person[] => {
-  return characters.filter((character) =>
-    character?.name.toLowerCase().includes(seachText)
-  );
+export const filterCharacters = (seachText: string, filterBy: FilteredField = FilteredField.Name, characters: Person[] = []): Person[] => {
+  let filterResult: Person[];
+  switch (filterBy) {
+    case FilteredField.Name:
+      filterResult = characters.filter(({ name }) => name.toLowerCase().includes(seachText));
+      break;
+    case FilteredField.Homeworld:
+      filterResult = characters.filter(({ homeworld }) => homeworld?.name?.includes(seachText))
+      break;
+    case FilteredField.Films:
+      filterResult = characters.filter(({ _tech_films }) => _tech_films?.films.find(({ title }) => title.includes(seachText)) )
+      break;
+    default:
+      filterResult = [];
+  }
+
+  return filterResult;
 };
 
 export const CharacterList = ({match}: UrlMatch) => {
@@ -46,11 +59,12 @@ export const CharacterList = ({match}: UrlMatch) => {
   const [searchPage, setSearchPage] = useState<number>(1);
   const { all } = useSelector((state: State) => state.bank);
   const router = useRouter();
-  const { value: searchValue } = useContext(SearchContext);
+  const { value: searchValue, filterBy } = useContext(SearchContext);
 
   useEffect(() => {
     if(all?.length){
       setTotalCount(all.length);
+      console.log(all);
       if(pageId){
         const page = Number.parseInt(pageId, 10);
         setCharacters(all.slice((page - 1) * 10, page * 10 ));
@@ -60,11 +74,11 @@ export const CharacterList = ({match}: UrlMatch) => {
 
   useEffect(() => {
     if(all?.length){
-      const filteredCharacters = filterCharacters(searchValue, all);
+      const filteredCharacters = filterCharacters(searchValue, filterBy, all);
       setTotalCount(filteredCharacters.length);
       setCharacters(filteredCharacters.slice((searchPage - 1) * 10, searchPage * 10 ));
     }
-  }, [searchValue]);
+  }, [searchValue, filterBy]);
 
   const onPageChange = ({ selected }:PageChangeType) => {
     searchValue ? setSearchPage(selected) : router.push(`/page/${selected + 1}`);

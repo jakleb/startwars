@@ -1,18 +1,18 @@
 import "./../index.scss";
 import { AppHeader } from "./AppHeader";
 import { CharacterList } from "./CharacterList";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ContactForm } from "./ContactForm";
 import { PersonDetail } from "./PersonDetail";
 import { SearchContext } from "../contexts";
-import { ThemeWrapper } from "./ThemeWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators, State } from "../state";
-import { bindActionCreators } from "redux";
+import { FilteredField } from "../types";
+import { State } from "../state";
 
 export const StarWarsContainer = () => {
   const [searchValue, setSerchValue] = useState<string>("");
+  const [filteredFilter, setFilteredFilter] = useState<FilteredField>(FilteredField.Name);
 
   const {favorites, theme} = useSelector((state: State) => state.bank);
 
@@ -21,13 +21,13 @@ export const StarWarsContainer = () => {
     setSerchValue(value);
   };
 
-
-
-
+  const onChangeFilter = (value:FilteredField ) => {
+    setFilteredFilter(value);
+  };
 
   return (
     <div className={`app-wrapper ${theme}`}>
-      <SearchContext.Provider value={{ value: searchValue, onSearchTextChange: onSerchChange }}>
+      <SearchContext.Provider value={{ value: searchValue, onSearchTextChange: onSerchChange, filterBy: filteredFilter, onFilterChange: onChangeFilter}}>
         <AppHeader />
         <div className="main-container">
           <Route exact path="/page/" component={CharacterList}>

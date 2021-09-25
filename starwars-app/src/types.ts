@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, Props } from "react";
+import { ChangeEvent, MouseEvent, Props, ReactChild, ReactFragment, ReactPortal } from "react";
 import { JsxElement } from "typescript";
 
 export interface QueryPeople {
@@ -18,7 +18,7 @@ export interface Person {
     height?: number;
     mass?: number;
     skinColor?: string;
-    homeworld?: HomeWorld[];
+    homeworld?: HomeWorld;
     _tech_films?: Films;
     species?: Species;
   }
@@ -52,7 +52,7 @@ export interface Person {
 
   export interface FieldDetailList {
     caption: string;
-    value: FieldDetail[];
+    value?: Object;
 }
 
   export interface UrlMatch {
@@ -76,14 +76,27 @@ export interface Person {
     selected: number
   }
 
+  export enum FilteredField {
+    Name = "name",
+    Homeworld = "homeworld",
+    Films = "films",
+  }
+
   export interface ISearchContext {
     value: string;
     onSearchTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    filterBy: FilteredField;
+    onFilterChange: (value: FilteredField) => void;
   }
 
   export enum ThemeKind {
     Dark = "theme-dark",
     Light = "theme-light",
+  }
+
+  export interface DetailsWrapperProps {
+    children?:  boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
+    totalCount?: number;
   }
 
 

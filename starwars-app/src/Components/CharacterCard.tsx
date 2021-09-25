@@ -9,16 +9,12 @@ import { actionCreators, State } from "../state/index";
 import { useRouter } from "../CustomHooks/hooks";
 import { CSSTransition } from 'react-transition-group';
 
-export const CharacterCard = (props: Person) => {
-  const { name, id } = props;
-  const [person, setPerson] = useState<Person>(props);
+export const CharacterCard = ({ id, name, ...fields}: Person) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { addToFavorities, removeFromFavorities } = bindActionCreators(actionCreators,dispatch);
-
-  const router = useRouter();
-
   let { favorites } = useSelector((state: State) => state.bank);
+  const router = useRouter();
 
   const onGoToDetail = () => {
     router.push(`/detail/${id}`)
@@ -29,7 +25,7 @@ export const CharacterCard = (props: Person) => {
       (character) => character.name === name
     );
     setIsFavourite(isFavoriteInState !== -1 ?? false);
-  }, [favorites, props]);
+  }, [favorites, id]);
 
   useEffect(() => {}, [isFavourite]);
 
@@ -38,14 +34,14 @@ export const CharacterCard = (props: Person) => {
     if (isFavourite) {
       removeFromFavorities(id);
     } else {
-      addToFavorities({ ...props });
+      addToFavorities({...{ name: name, id: id}});
     }
     console.log("Ulubine", favorites);
   };
 
   return (
     <div className={"star-wars-card"}>
-       <CSSTransition in={!!props} classNames="card" timeout={300} unmountOnExit>
+       <CSSTransition in={!!id} classNames="card" timeout={300} unmountOnExit>
       <div className="content-wrapper" >
         <div className="card-header">
           <div className="header-spacer"></div>
@@ -53,19 +49,17 @@ export const CharacterCard = (props: Person) => {
           <div className="header-star-container">
             <BiStar
               onClick={onAddToFavourites}
-              className="favorite-icon"
+              className={isFavourite ? `favorite-icon-is-favorite` : `favorite-icon`}
               data-for="happyFace"
-              color={isFavourite ? "#d0c438" : "#c3bebe"}
               size={"25px"}
             />
           </div>
         </div>
         <div className="character-basic-info-container">
-        {/* {Object.entries(props)
-            .slice(1, 4)
+        {Object.entries(fields)
             .map((detail, index) => (
               <CardDetail key={index} caption={detail[0]} value={detail[1]} />
-            ))} */}
+            ))}
           <div className="character-details">
             <div className="details-text" onClick={onGoToDetail}>
               Details
