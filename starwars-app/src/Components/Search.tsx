@@ -1,12 +1,36 @@
 import "./../index.scss";
 import { FaSistrix,FaFilter } from "react-icons/fa";
-import { useContext } from "react";
+import { MouseEvent, useContext, useDebugValue, useEffect, useRef, useState } from "react";
 import { SearchContext } from "../contexts";
-import { FilteredField } from "../types";
+import { FilteredField, ModalPosition } from "../types";
+import { FilterModalList } from "./FilterModalList";
+import { Modal } from "./Modal";
+
 
 export const Search = () => {
 
   const { value, onSearchTextChange, filterBy, onFilterChange } = useContext(SearchContext);
+
+  const [position, setPosition] = useState<ModalPosition>({x: 0, y: 0});
+  const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if(position.x && position.y){
+      setFilterIsOpen(true);
+      console.log(position);
+    }
+  }, [position.x, position.y]);
+
+  const hideFilter = () => {
+    setFilterIsOpen(!filterIsOpen);
+  }
+
+
+  const openFilter = ({clientX, clientY}: MouseEvent<SVGAElement>) => {
+    if(!filterIsOpen){
+      setPosition({...{x: clientX, y: clientY}});
+    }
+  }
 
   return (
     <>
@@ -25,11 +49,11 @@ export const Search = () => {
         </div>
       </div>
       <div className="filter-icon">
-        <FaFilter />
+        <FaFilter onClick={openFilter}/>
       </div>
-      <div onClick={() => { onFilterChange(FilteredField.Name) }}>Nazwa</div>
-      <div onClick={() => { onFilterChange(FilteredField.Homeworld) }}>HomeWorld</div>
-      <div onClick={() => { onFilterChange(FilteredField.Films) }}>Films</div>
+      {
+        filterIsOpen && <Modal list={<FilterModalList />} toggleModal={hideFilter} title={"Filters"} coordinates={position}/>
+      }
     </>
   );
 };

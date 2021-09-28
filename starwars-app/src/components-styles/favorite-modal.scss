@@ -1,6 +1,7 @@
 .modal-wrapper{
     position: fixed;
     top: 40px;
+    right: 30px;
     z-index: 200;
     width: 200px;
     height: 300px;
@@ -32,7 +33,7 @@
     transition: right 300ms;
   }
   
-  .favorities-modal {
+  .modal {
     //position: fixed;
     display: flex;
     flex-direction: column;
@@ -109,5 +110,11 @@
     align-items: center;
     justify-content: center;
     color: #848256;
+  }
+
+  .filter-row{
+    display: flex;
+    padding: 5px;
+    margin-bottom: 5px;
   }
 

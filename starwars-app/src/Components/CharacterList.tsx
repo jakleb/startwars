@@ -31,20 +31,30 @@ const renderCharacterCard = (results: Person[]) => {
   return people;
 };
 
-export const filterCharacters = (seachText: string, filterBy: FilteredField = FilteredField.Name, characters: Person[] = []): Person[] => {
-  let filterResult: Person[];
-  switch (filterBy) {
-    case FilteredField.Name:
-      filterResult = characters.filter(({ name }) => name.toLowerCase().includes(seachText));
-      break;
-    case FilteredField.Homeworld:
-      filterResult = characters.filter(({ homeworld }) => homeworld?.name?.includes(seachText))
-      break;
-    case FilteredField.Films:
-      filterResult = characters.filter(({ _tech_films }) => _tech_films?.films.find(({ title }) => title.includes(seachText)) )
-      break;
-    default:
-      filterResult = [];
+export const filterCharacters = (seachText: string, filter: string, characters: Person[] = []): Person[] => {
+  let filterResult: Person[] = characters;
+  //const hasFilter = 
+  // switch (filterBy) {
+  //   case FilteredField.Name:
+  //     filterResult = characters.filter(({ name }) => name.toLowerCase().includes(seachText));
+  //     break;
+  //   case FilteredField.Homeworld:
+  //     filterResult = characters.filter(({ homeworld }) => homeworld?.name?.includes(seachText))
+  //     break;
+  //   case FilteredField.Films:
+  //     filterResult = characters.filter(({ _tech_films }) => _tech_films?.films.find(({ title }) => title.includes(seachText)) )
+  //     break;
+  //   default:
+  //     filterResult = [];
+  // }
+
+  if(seachText && seachText!= ''){
+    filterResult = characters.filter(({ name }) => name.toLowerCase().includes(seachText));
+  }
+  
+  if(filter && filter.startsWith("?filmtitle=")){
+    const filmTitle = filter.replace("?filmtitle=",'');
+    filterResult = characters.filter(({ _tech_films }) => _tech_films?.films.find(({ title }) => title.includes(filmTitle)) )
   }
 
   return filterResult;
@@ -59,6 +69,7 @@ export const CharacterList = ({match}: UrlMatch) => {
   const [searchPage, setSearchPage] = useState<number>(1);
   const { all } = useSelector((state: State) => state.bank);
   const router = useRouter();
+  const filter = router.location.search;
   const { value: searchValue, filterBy } = useContext(SearchContext);
 
   useEffect(() => {
@@ -74,11 +85,11 @@ export const CharacterList = ({match}: UrlMatch) => {
 
   useEffect(() => {
     if(all?.length){
-      const filteredCharacters = filterCharacters(searchValue, filterBy, all);
+      const filteredCharacters = filterCharacters(searchValue, filter , all);
       setTotalCount(filteredCharacters.length);
       setCharacters(filteredCharacters.slice((searchPage - 1) * 10, searchPage * 10 ));
     }
-  }, [searchValue, filterBy]);
+  }, [searchValue, filter]);
 
   const onPageChange = ({ selected }:PageChangeType) => {
     searchValue ? setSearchPage(selected) : router.push(`/page/${selected + 1}`);

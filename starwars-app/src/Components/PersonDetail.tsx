@@ -15,7 +15,8 @@ export const useDetail = (personId: string): Person => {
 
     useEffect(() => {
         setPerson(all.find(person => person.id === personId));
-    }, [all, personId])
+    }, [all, personId]);
+
     return person || {} as Person
 }
 

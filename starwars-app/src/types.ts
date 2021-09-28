@@ -30,6 +30,19 @@ export interface Person {
     population: number;
   }
 
+  export interface ModalProps {
+    toggleModal: () => void;
+    list: JSX.Element;
+    buttons?: JSX.Element;
+    title: string;
+    coordinates?: ModalPosition;
+  }
+
+  export interface ModalPosition{
+    x: number;
+    y: number;
+  }
+
   export interface Species{
     name: string;
     language: string;
@@ -39,9 +52,13 @@ export interface Person {
     films:Film[];
   }
 
+  export interface QueryFilms{
+    allFilms: Films;
+  }
+
   export interface Film{
     title: string;
-    description: string;
+    description?: string;
   }
   
 
@@ -56,7 +73,7 @@ export interface Person {
 }
 
   export interface UrlMatch {
-      match: { params: { pageid: string; personid: string } };
+      match: { params: { pageid: string; personid: string, filter: string } };
   }
 
   export enum ButtonKind {
@@ -98,5 +115,4 @@ export interface Person {
     children?:  boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
     totalCount?: number;
   }
-
 

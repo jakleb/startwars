@@ -26,6 +26,14 @@
             display: flex;
             position: relative;
             margin-right: 10px;
+
+            .empty-list{
+              color: gray;
+            }
+
+            .no-empty-list{
+              color: #d0c438;
+            }
           
             .state-counter{
               background-color: #bb1010;

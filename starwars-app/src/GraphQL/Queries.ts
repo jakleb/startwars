@@ -33,6 +33,18 @@ query{
 }
 `
 
+export const LOAD_ALL_FILMS = gql`
+  query{
+    allFilms{
+      films{
+        title
+      }
+    }
+  }
+`
+
+
+
 export const LOAD_PERSON_BY_ID = (id: string) => gql`
 query {
     person(id: ${id}) {
