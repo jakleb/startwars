@@ -1,14 +1,13 @@
 import { FieldDetailList } from "../types";
-import { capitalizeFirstLetter, convertFromCamelCase } from "../utils/StringUitls";
-import { getDetails } from "./PersonDetail";
+import { DetailList } from "./DetailList";
 
 export const CardDetailList = ({ caption, value }: FieldDetailList) => {
 
   return (
-    <div>{}
-      <div>{caption}</div>
+    <div className="details-group">
+      <div className="details-group-title">{caption}</div>
       {
-        value && getDetails(value)
+        value &&  <DetailList {...value}/>
       }
     </div>
   );

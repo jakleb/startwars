@@ -2,12 +2,20 @@
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
+
+    .person-details-wrapper, 
+    .person-detail-main-details{
+        display: flex;
+        flex-grow: 1;
+    }
     
     .person-main-details, .person-additional-details{
         margin: 20px;
         padding: 20px;
         padding-top: 5px;
         border-radius: 8px;
+        display: flex;
+        flex-direction: column;
     
         .details-section-title{
             display: flex;
@@ -48,6 +56,13 @@
             color: #f5efe3;
         }
     }
+
+    .details-group{
+        background-color: orange;
+        .details-group-title{
+            font-size: 1.8rem;
+        }
+    }
 }
 
 .details-wrapper{
@@ -57,3 +72,4 @@
         flex-direction: column;
     }
 }
+

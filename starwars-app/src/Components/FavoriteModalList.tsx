@@ -1,17 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators, State } from "../state";
-import { bindActionCreators } from "redux";
 import { FaStar } from "react-icons/fa";
-import { MouseEvent, useEffect, useRef, useState } from "react";
-import { ButtonKind, Person } from "../types";
-import { Button } from "./Button";
-import { useRouter } from "../CustomHooks/hooks";
+import { MouseEvent } from "react";
+import { useAppStore, useRouter } from "../CustomHooks/hooks";
 
 export const FavoriteModalList = () => {
-    const dispatch = useDispatch();
-    const { removeFromFavorities } = bindActionCreators(actionCreators, dispatch);
 
-    const { favorites } = useSelector((state: State) => state.bank);
+    const {favorites, removeFromFavorities} = useAppStore();
     const router = useRouter();
 
     const goToDetail = (id: string) => {

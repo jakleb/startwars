@@ -15,8 +15,22 @@
                 flex-direction: column;
                 padding-bottom: 10px;
 
+                &.valid-error{
+                    input,textarea{
+                        border: 1px solid #fd4021!important;
+                        outline: none;
+                        box-shadow: 1px 1px 7px -1px #fd4021;
+                    }
+
+                    p{
+                        visibility: visible;
+                    }
+                }
+
                 p{
                     color: red;
+                    margin-block: 0;
+                    visibility: hidden;
                 }
         
                 label{
@@ -42,12 +56,6 @@
                         border: 1px solid #63efe8;
                         outline: none;
                         box-shadow: 1px 1px 7px -1px #63efe8;
-                    }
-
-                    &.valid-error{
-                        border: 1px solid #fd4021;
-                        outline: none;
-                        box-shadow: 1px 1px 7px -1px #fd4021;
                     }
                 }
             

@@ -1,19 +1,15 @@
-import React, { MouseEvent, useContext, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Person } from "../types";
 import { BiStar } from "react-icons/bi";
 import { FaAngleDoubleRight } from "react-icons/fa";
-import { CardDetail } from "./CardDetail";
-import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators, State } from "../state/index";
-import { useRouter } from "../CustomHooks/hooks";
+import { useAppStore, useRouter } from "../CustomHooks/hooks";
 import { CSSTransition } from 'react-transition-group';
+import { DetailList } from "./DetailList";
 
 export const CharacterCard = ({ id, name, ...fields}: Person) => {
+
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const { addToFavorities, removeFromFavorities } = bindActionCreators(actionCreators,dispatch);
-  let { favorites } = useSelector((state: State) => state.bank);
+  const { addToFavorities, removeFromFavorities, favorites } = useAppStore();
   const router = useRouter();
 
   const onGoToDetail = () => {
@@ -27,16 +23,15 @@ export const CharacterCard = ({ id, name, ...fields}: Person) => {
     setIsFavourite(isFavoriteInState !== -1 ?? false);
   }, [favorites, id]);
 
-  useEffect(() => {}, [isFavourite]);
+  //useEffect(() => {}, [isFavourite]);
 
   const onAddToFavourites = (e: MouseEvent<SVGAElement>) => {
     setIsFavourite(!isFavourite);
     if (isFavourite) {
       removeFromFavorities(id);
     } else {
-      addToFavorities({...{ name: name, id: id}});
+      addToFavorities({...{ id, name, ...fields}});
     }
-    console.log("Ulubine", favorites);
   };
 
   return (
@@ -56,10 +51,7 @@ export const CharacterCard = ({ id, name, ...fields}: Person) => {
           </div>
         </div>
         <div className="character-basic-info-container">
-        {Object.entries(fields)
-            .map((detail, index) => (
-              <CardDetail key={index} caption={detail[0]} value={detail[1]} />
-            ))}
+          <DetailList {...fields}/>
           <div className="character-details">
             <div className="details-text" onClick={onGoToDetail}>
               Details

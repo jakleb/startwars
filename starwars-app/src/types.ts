@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, Props, ReactChild, ReactFragment, ReactPortal } from "react";
+import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, MouseEvent, Props, ReactChild, ReactFragment, ReactPortal, TextareaHTMLAttributes } from "react";
 import { JsxElement } from "typescript";
 
 export interface QueryPeople {
@@ -39,8 +39,8 @@ export interface Person {
   }
 
   export interface ModalPosition{
-    x: number;
-    y: number;
+    left: number;
+    top: number;
   }
 
   export interface Species{
@@ -83,9 +83,7 @@ export interface Person {
     primary = "custom-primary-btn"
   }
 
-  export interface ButtonProps {
-    caption: string;
-    click: (e: MouseEvent<HTMLButtonElement>) => void;
+  export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     kind: ButtonKind;
   }
 
@@ -93,17 +91,9 @@ export interface Person {
     selected: number
   }
 
-  export enum FilteredField {
-    Name = "name",
-    Homeworld = "homeworld",
-    Films = "films",
-  }
-
   export interface ISearchContext {
     value: string;
     onSearchTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    filterBy: FilteredField;
-    onFilterChange: (value: FilteredField) => void;
   }
 
   export enum ThemeKind {
@@ -116,3 +106,40 @@ export interface Person {
     totalCount?: number;
   }
 
+  export interface FilterModalListProps{
+    onSelectTilte: (element: HTMLInputElement) => void;
+  }
+  
+  export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+    label: string;
+    fluid?: boolean;
+    labelClassName?: string;
+    name?: string;
+    error?: string;
+    type: "textarea";
+  }
+  
+  export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    label: string;
+    fluid?: boolean;
+    labelClassName?: string;
+    name?: string;
+    error?: string;
+  }
+
+  export interface ContactFormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    postalCode: string;
+    phoneNumber: string;
+    message: string;
+  };
+
+  export type ControlProps = InputProps | TextareaProps;
+
+  export interface UrlAppInfoProps{
+    filter: string|null;
+    characters: Person[];
+    isFavoritesPage: boolean;
+  }

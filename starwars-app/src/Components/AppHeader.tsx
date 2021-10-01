@@ -6,23 +6,21 @@ import { ContactForm } from "./ContactForm";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State, store } from "../state/index";
 import { Person, ThemeKind } from "../types";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Modal } from "./Modal";
 import { bindActionCreators } from "redux";
 import { FavoriteModalList } from "./FavoriteModalList";
 import { FavoriteModalButton } from "./FavoriteModalButton";
+import { useAppStore } from "../CustomHooks/hooks";
 
 export const AppHeader = (): JSX.Element => {
 
   const [favoritiesModalIsShown, setFavoritiesModalIsShown] = useState<boolean>(false);
+  const {favorites, theme, changeTheme} = useAppStore();
 
-  const dispatch = useDispatch();
-  const { changeTheme } = bindActionCreators(actionCreators, dispatch);
-  const { favorites, theme } = useSelector((state: State) => state.bank);
-
-  const toggleModal = () => {
+  const toggleModal = useCallback(() => {
     setFavoritiesModalIsShown(!favoritiesModalIsShown);
-  };
+  }, [favoritiesModalIsShown]);
 
   useEffect(() => {
     console.log(favoritiesModalIsShown);
@@ -38,7 +36,7 @@ export const AppHeader = (): JSX.Element => {
         </div>
         <Link to="/page/1">Characters</Link>
         <Link to="/contact">Contact</Link>
-        <Link to="/favorities">Favorities</Link>
+        <Link to="/favorites/1">Favorities</Link>
         <div
           className="app-header-favorite-icon"
           onClick={() => { setFavoritiesModalIsShown(true) }}>

@@ -1,36 +1,36 @@
 import "./../index.scss";
 import { FaSistrix,FaFilter } from "react-icons/fa";
-import { MouseEvent, useContext, useDebugValue, useEffect, useRef, useState } from "react";
-import { SearchContext } from "../contexts";
-import { FilteredField, ModalPosition } from "../types";
-import { FilterModalList } from "./FilterModalList";
+import { MouseEvent, useContext, useEffect, useState, useCallback } from "react";
+import { SearchContext } from "../utils/contexts";
+import { ModalPosition } from "../types";
 import { Modal } from "./Modal";
+import { FilterListWrapper } from "./FilterListWrapper";
 
 
 export const Search = () => {
 
-  const { value, onSearchTextChange, filterBy, onFilterChange } = useContext(SearchContext);
+  const { value, onSearchTextChange } = useContext(SearchContext);
 
-  const [position, setPosition] = useState<ModalPosition>({x: 0, y: 0});
+  const [position, setPosition] = useState<ModalPosition>({left: 0, top: 0});
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if(position.x && position.y){
+    if(position.top && position.left){
       setFilterIsOpen(true);
       console.log(position);
     }
-  }, [position.x, position.y]);
+  }, [position.left, position.top]);
 
-  const hideFilter = () => {
+  const hideFilter = useCallback(() => {
     setFilterIsOpen(!filterIsOpen);
-  }
+  }, [filterIsOpen])
 
 
-  const openFilter = ({clientX, clientY}: MouseEvent<SVGAElement>) => {
-    if(!filterIsOpen){
-      setPosition({...{x: clientX, y: clientY}});
+  const openFilter = useCallback(({ clientX, clientY }: MouseEvent<SVGAElement>) => {
+    if (!filterIsOpen) {
+      setPosition({ ...{ left: clientX, top: clientY } });
     }
-  }
+  }, [filterIsOpen])
 
   return (
     <>
@@ -41,7 +41,7 @@ export const Search = () => {
         <div className="search-input-wrapper">
           <input
             className="search-input"
-            placeholder={filterBy}
+            placeholder="name"
             type="text"
             value={value}
             onChange={onSearchTextChange}
@@ -52,7 +52,12 @@ export const Search = () => {
         <FaFilter onClick={openFilter}/>
       </div>
       {
-        filterIsOpen && <Modal list={<FilterModalList />} toggleModal={hideFilter} title={"Filters"} coordinates={position}/>
+        filterIsOpen && 
+            <Modal 
+              list={<FilterListWrapper />} 
+              toggleModal={hideFilter} 
+              title={"Filters"} 
+              coordinates={position}/>
       }
     </>
   );

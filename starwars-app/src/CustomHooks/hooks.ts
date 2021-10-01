@@ -1,19 +1,18 @@
 import { useQuery } from "@apollo/client";
-import { MouseEvent, RefObject, useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import { LOAD_ALL_FILMS, LOAD_STARWARS_CHARACTERS } from "../GraphQL/Queries";
 import { actionCreators, State } from "../state";
-import { Film, Films, People, Person, QueryFilms, QueryPeople } from "../types";
+import { Films, Person, QueryFilms, QueryPeople, UrlAppInfoProps } from "../types";
 import { bindActionCreators } from "redux";
 
 export const useStarWarsApi = (pageNumber: number) => {
+
+    const { addAll } = useAppStore();
+
     const {error, loading, data} = useQuery<QueryPeople>(LOAD_STARWARS_CHARACTERS);
     let people = useRef<Person[]>();
-  
-    const dispatch = useDispatch();
-    const { addAll, getAll } = bindActionCreators(actionCreators,dispatch);
-    const { all } = useSelector((state: State) => state.bank);
   
     useEffect(() => {
       if(error){
@@ -30,11 +29,10 @@ export const useStarWarsApi = (pageNumber: number) => {
 
     const [films, setFilms] = useState<Films>({} as Films);
 
-    const {error, loading, data} = useQuery<QueryFilms>(LOAD_ALL_FILMS);
+    const {loading, data} = useQuery<QueryFilms>(LOAD_ALL_FILMS);
 
     useEffect(() => {
       if(data?.allFilms?.films){
-        console.log(data);
         setFilms(data?.allFilms)
       }
     },[loading])
@@ -82,3 +80,35 @@ export const useStarWarsApi = (pageNumber: number) => {
       [ref, handler]
     );
   }
+
+  export const useCharacrterListData = (): UrlAppInfoProps => {
+
+    const { all, favorites } = useAppStore()
+    const { location:{ search, pathname}} = useRouter();
+
+    const hasFilter: boolean = search.startsWith("?filmtitle")
+    const isFavoritesPage = pathname.includes("favorites");
+    const characters = isFavoritesPage ? favorites : all;
+    const filter = hasFilter ? search.replace("?filmtitle=",'') : null;
+    return {filter, characters, isFavoritesPage}
+  }
+
+  export const useAppStore = () => {
+    const dispatch = useDispatch();
+    const actions = bindActionCreators(actionCreators,dispatch);
+    const selectors = useSelector((state: State) => state.bank);
+
+    return {...actions, ...selectors }
+  }
+
+  export const useDetail = (personId: string): Person => {
+    const [person, setPerson] = useState<Person>();
+    const { all } = useAppStore();
+
+    useEffect(() => {
+        setPerson(all.find(person => person.id === personId));
+    }, [all, personId]);
+
+    return person || {} as Person
+}
+  
