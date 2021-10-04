@@ -24,7 +24,6 @@ export const AppHeader = (): JSX.Element => {
   }, [favoritiesModalIsShown]);
 
   useEffect(() => {
-    console.log(favoritiesModalIsShown);
   }, [favorites, favoritiesModalIsShown]);
 
   return (
