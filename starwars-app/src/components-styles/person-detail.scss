@@ -3,6 +3,10 @@
     flex-direction: column;
     flex-basis: 100%;
 
+    .person-detail-header{
+        font-size: 3rem;
+    }
+
     .person-details-wrapper, 
     .person-detail-main-details{
         display: flex;
@@ -16,6 +20,7 @@
         border-radius: 8px;
         display: flex;
         flex-direction: column;
+        flex-basis: 100%;
     
         .details-section-title{
             display: flex;
@@ -58,9 +63,12 @@
     }
 
     .details-group{
-        background-color: orange;
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: column;
         .details-group-title{
             font-size: 1.8rem;
+            margin-bottom: 20px;
         }
     }
 }

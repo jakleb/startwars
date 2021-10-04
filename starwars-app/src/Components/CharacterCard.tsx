@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useState } from "react";
-import { Person } from "../types";
+import { APP_ENDPOINTS, Person } from "../types";
 import { BiStar } from "react-icons/bi";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { useAppStore, useRouter } from "../CustomHooks/hooks";
@@ -13,7 +13,7 @@ export const CharacterCard = ({ id, name, ...fields}: Person) => {
   const router = useRouter();
 
   const onGoToDetail = () => {
-    router.push(`/detail/${id}`)
+    router.push(`/${APP_ENDPOINTS.Detail}/${id}`)
   };
 
   useEffect(() => {

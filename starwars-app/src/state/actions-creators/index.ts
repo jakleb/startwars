@@ -11,23 +11,6 @@ export const addAll = (people: Person[]) => {
   }; 
 }
 
-export const getAll = () => {
-  return (dispatch: Dispatch<AppAction>) => {
-    dispatch({
-      type: AllActionType.GETALL
-    });
-  }; 
-}
-
-export const getOne = (id:string) => {
-  return (dispatch: Dispatch<AppAction>) => {
-    dispatch({
-      type: AllActionType.GETONE,
-      payload: id
-    });
-  }; 
-}
-
 export const addToFavorities = (character: Person) => {
   return (dispatch: Dispatch<AppAction>) => {
     dispatch({
@@ -50,14 +33,6 @@ export const removeAllFromFavorities = () => {
   return (dispatch: Dispatch<AppAction>) => {
     dispatch({
       type: FavoriteActionType.RemoveAll
-    });
-  };
-};
-
-export const showFavorities = () => {
-  return (dispatch: Dispatch<AppAction>) => {
-    dispatch({
-      type: FavoriteActionType.Show
     });
   };
 };

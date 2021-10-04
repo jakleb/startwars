@@ -20,8 +20,9 @@ export const FilterModalList = ({ onSelectTilte }: FilterModalListProps) => {
                         films.map(({ title }, index) => {
                             return <div className="filter-row" key={index}>
                                 <div>
-                                    <input onClick={(e) => { onSelectTilte(e.target as HTMLInputElement) }} 
-                                           type="checkbox" value={title} 
+                                    <input 
+                                           type="checkbox" value={title}
+                                           onChange={(e) => { onSelectTilte(e.target as HTMLInputElement) }}
                                     />
                                 </div>
                                 <div>{title}</div>

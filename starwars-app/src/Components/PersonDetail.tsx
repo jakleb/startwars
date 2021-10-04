@@ -1,4 +1,4 @@
-import React, { MouseEvent, Suspense, useCallback, useState } from "react";
+import React, { MouseEvent, Suspense, useCallback, useEffect, useState } from "react";
 import { BiStar } from "react-icons/bi";
 import { useAppStore, useDetail } from "../CustomHooks/hooks";
 import { ButtonKind, UrlMatch } from "../types";
@@ -16,6 +16,10 @@ export const PersonDetail = ({ match }: UrlMatch) => {
     const [homeWorldsIsShown, setHomeWorldsIsShown] = useState<boolean>(false);
     const [isFavourite, setIsFavourite] = useState<boolean>(false);
     const { addToFavorities, removeFromFavorities } = useAppStore();
+
+    useEffect(() => {
+        setHomeWorldsIsShown(false);
+    },[personId])
 
     const getDetailsLength = (...args: object[]) => {
         let length = 0;

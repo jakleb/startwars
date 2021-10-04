@@ -18,7 +18,7 @@ export const Modal = ({ toggleModal, list, buttons, title, coordinates }: ModalP
             {list}
           </div>
           <div className="modal-btns-container">
-            {buttons}
+            {!!buttons && buttons}
           </div>
         </div>
       </div>

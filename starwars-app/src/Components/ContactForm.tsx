@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ButtonKind, ContactFormData } from "../types";
 import { Button } from "./Button";

@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { ContactForm } from "./ContactForm";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State, store } from "../state/index";
-import { Person, ThemeKind } from "../types";
+import { APP_ENDPOINTS, Person, ThemeKind } from "../types";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Modal } from "./Modal";
 import { bindActionCreators } from "redux";
 import { FavoriteModalList } from "./FavoriteModalList";
 import { FavoriteModalButton } from "./FavoriteModalButton";
 import { useAppStore } from "../CustomHooks/hooks";
+
 
 export const AppHeader = (): JSX.Element => {
 
@@ -32,22 +33,28 @@ export const AppHeader = (): JSX.Element => {
       <div className="app-header-favourite-container">
         <div className="theme-mode-container">
           <div>Theme: </div>
-          <div className={`${theme === ThemeKind.Light ? "light" : "dark"}`} onClick={() => { changeTheme() }}>{theme === ThemeKind.Light ? "Light" : "Dark"}</div>
+              <div className={`${theme === ThemeKind.Light ? "light" : "dark"}`} 
+                   onClick={() => { changeTheme() }}>{theme === ThemeKind.Light ? "Light" : "Dark"}
+              </div>
         </div>
-        <Link to="/page/1">Characters</Link>
-        <Link to="/contact">Contact</Link>
-        <Link to="/favorites/1">Favorities</Link>
+        <Link to={`/${APP_ENDPOINTS.List}/1`}>Characters</Link>
+        <Link to={`/${APP_ENDPOINTS.Contact}`}>Contact</Link>
+        <Link to={`/${APP_ENDPOINTS.Favorites}/1`}>Favorities</Link>
         <div
           className="app-header-favorite-icon"
           onClick={() => { setFavoritiesModalIsShown(true) }}>
           <FaStar className={ !!favorites.length ? "no-empty-list" : "empty-list" } size={"25px"} />
-          {!!favorites?.length && (<div className={"state-counter"}>{favorites && favorites?.length}</div>)}
-          {favoritiesModalIsShown && (
-            <Modal toggleModal={toggleModal}
-              list={<FavoriteModalList />} 
-              buttons={<FavoriteModalButton />} 
-              title={"Favorites"}/>
-          )}
+          {
+            !!favorites?.length && (<div className={"state-counter"}>{favorites && favorites?.length}</div>)
+          }
+          {
+            favoritiesModalIsShown && (
+              <Modal toggleModal={toggleModal}
+                list={<FavoriteModalList />} 
+                buttons={<FavoriteModalButton />} 
+                title={"Favorites"}/>
+                ) 
+          }
         </div>
       </div>
     </div>

@@ -2,9 +2,9 @@ import "./../index.scss";
 import { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { PageChangeType, Person, UrlMatch } from "../types";
+import { APP_ENDPOINTS, PageChangeType, Person, UrlMatch } from "../types";
 import { CharacterCard } from "./CharacterCard";
-import { useStarWarsApi, useRouter, useCharacrterListData } from "../CustomHooks/hooks";
+import { useRouter, useCharacrterListData } from "../CustomHooks/hooks";
 import { SearchContext } from "../utils/contexts";
 import Loader from "./Loader";
 import { filterCharacters } from "../utils/appUtils";
@@ -13,8 +13,6 @@ import { filterCharacters } from "../utils/appUtils";
 export const CharacterList = ({match}: UrlMatch) => {
 
   const pageId = match?.params?.pageid;
-
-  useStarWarsApi(Number.parseInt(pageId,10));
 
   const [totalCount, setTotalCount] = useState<number>(0);
   const [characters, setCharacters] = useState<Person[]>([] as Person[]);
@@ -51,7 +49,7 @@ export const CharacterList = ({match}: UrlMatch) => {
   }, [searchValue, filter]);
 
   const onPageChange = ({ selected }:PageChangeType) => {
-    searchValue ? setSearchPage(selected) : router.push(`/${isFavoritesPage ? "favorites" : "page"}/${selected + 1}`);
+    searchValue ? setSearchPage(selected) : router.push(`/${isFavoritesPage ? APP_ENDPOINTS.Favorites : APP_ENDPOINTS.List}/${selected + 1}`);
   };
 
   return (

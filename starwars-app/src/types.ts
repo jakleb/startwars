@@ -1,6 +1,5 @@
-import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, MouseEvent, Props, ReactChild, ReactFragment, ReactPortal, TextareaHTMLAttributes } from "react";
-import { UseFormRegister } from "react-hook-form";
-import { JsxElement } from "typescript";
+import { ButtonHTMLAttributes, ChangeEvent, ReactChild, ReactFragment, ReactPortal } from "react";
+
 
 export interface QueryPeople {
     allPeople: People;
@@ -29,7 +28,6 @@ export interface Person {
     diameter: number;
     gravity: string;
     population: number;
-    id: string;
   }
 
   export interface ModalProps {
@@ -114,28 +112,6 @@ export interface Person {
 
   export interface FilterModalListProps{
     onSelectTilte: (element: HTMLInputElement) => void;
-    //setCurrentRef: (element: HTMLInputElement) => void;
-  }
-  
-  export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-    label: string;
-    fluid?: boolean;
-    labelClassName?: string;
-    name?: string;
-    error?: string;
-    type: "textarea";
-    // register: UseFormRegister<ContactFormData>;
-    // fieldName: "firstName" | "lastName" | "email" | "postalCode" | "phoneNumber" | "message";
-  }
-  
-  export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string;
-    fluid?: boolean;
-    labelClassName?: string;
-    name?: string;
-    error?: string;
-    register:  UseFormRegister<ContactFormData>;
-    // register: UseFormRegister<ContactFormData>;
   }
 
   export interface InputWrapperProps {
@@ -145,12 +121,7 @@ export interface Person {
     labelClassName?: string;
     name?: string;
     error?: string;
-    type?: string;
-    fieldName?: ContactFormDataFieldType
   }
-
-  export type ContactFormDataFieldType =  "firstName" | "lastName" | "email" | "postalCode" | "phoneNumber" | "message";
-
 
   export interface ContactFormData {
     firstName: string;
@@ -159,12 +130,18 @@ export interface Person {
     postalCode: string;
     phoneNumber: string;
     message: string;
-  };
-
-  export type ControlProps = InputProps | TextareaProps;
+  }
 
   export interface UrlAppInfoProps{
     filter: string|null;
     characters: Person[];
     isFavoritesPage: boolean;
+  }
+
+  export enum APP_ENDPOINTS {
+    Favorites = "favorites",
+    Detail = "detail",
+    Contact = "contact",
+    List = "list",
+    Filter = "?filmtitle=",
   }

@@ -37,7 +37,7 @@
         label{
             color:#818181;
         }
-        input{
+        input, textarea{
             background-color: #dddddd;
             &:focus{
                 border-color: #09a199!important;
@@ -48,6 +48,10 @@
                 border: #09a199;
             }
         }
+    }
+
+    .card-detail-caption{
+        color:#818181;
     }
 }
 .theme-light{
@@ -97,5 +101,9 @@
                 border: 1px solid #63efe8!important;
             }
         }
+    }
+
+    .card-detail-caption{
+        color: #363535;
     }
 }

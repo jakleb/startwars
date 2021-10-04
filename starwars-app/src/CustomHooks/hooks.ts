@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import { LOAD_ALL_FILMS, LOAD_STARWARS_CHARACTERS } from "../GraphQL/Queries";
 import { actionCreators, State } from "../state";
-import { Films, Person, QueryFilms, QueryPeople, UrlAppInfoProps, URLQueryParams } from "../types";
+import { APP_ENDPOINTS, Films, Person, QueryFilms, QueryPeople, UrlAppInfoProps, URLQueryParams } from "../types";
 import { bindActionCreators } from "redux";
 
-export const useStarWarsApi = (pageNumber: number) => {
+export const useStarWarsApi = () => {
 
     const { addAll } = useAppStore();
+    const { match } = useRouter();
 
     const {error, loading, data} = useQuery<QueryPeople>(LOAD_STARWARS_CHARACTERS);
     let {current} = useRef<Person[]>();
@@ -22,7 +23,7 @@ export const useStarWarsApi = (pageNumber: number) => {
         current = data?.allPeople.people;
         addAll(data?.allPeople?.people || []);
       }
-    }, [pageNumber,loading]);
+    }, [match.params,loading]);
   }
 
   export const useFilters = () => {
@@ -86,10 +87,10 @@ export const useStarWarsApi = (pageNumber: number) => {
     const { all, favorites } = useAppStore()
     const { location:{ search, pathname}} = useRouter();
 
-    const hasFilter: boolean = search.startsWith("?filmtitle")
-    const isFavoritesPage = pathname.includes("favorites");
+    const hasFilter: boolean = search.startsWith(`${APP_ENDPOINTS.Filter}`)
+    const isFavoritesPage = pathname.includes(`${APP_ENDPOINTS.Favorites}`);
     const characters = isFavoritesPage ? favorites : all;
-    const filter = hasFilter ? decodeURI(search.replace("?filmtitle=",'')) : null;
+    const filter = hasFilter ? decodeURI(search.replace(`${APP_ENDPOINTS.Filter}`,'')) : null;
     return {filter, characters, isFavoritesPage}
   }
 

@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import { MouseEvent } from "react";
 import { useAppStore, useRouter } from "../CustomHooks/hooks";
+import { APP_ENDPOINTS } from "../types";
 
 export const FavoriteModalList = () => {
 
@@ -8,7 +9,7 @@ export const FavoriteModalList = () => {
     const router = useRouter();
 
     const goToDetail = (id: string) => {
-        router.push(`/detail/${id}`)
+        router.push(`/${APP_ENDPOINTS.Detail}/${id}`)
     };
 
     return (

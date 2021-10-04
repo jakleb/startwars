@@ -26,10 +26,10 @@ const addFavorite = (state: AppState, payload: Person) => {
   return {...state};
 };
 
-const removeFavorite = (state: AppState, id: string) => {
+const removeFavorite = (state: AppState, c_id: string) => {
   const { favorites } = state;
   const newFavorites = [...favorites];
-  const index = newFavorites.findIndex((character) => character.id === id);
+  const index = newFavorites.findIndex(({id}) => id === c_id);
 
   if (index !== -1) 
     newFavorites.splice(index, 1);
@@ -48,23 +48,9 @@ const removeAllFavorities = (state: AppState) => {
   return {...state};
 };
 
-const getAll = (state: AppState) => {
-  return state;
-}
 
 const setAll = (state: AppState, people: Person[]) => {
   const newAll = people;
-  state.all = newAll;
-  return {...state};
-}
-
-const getPersonByID = (state: AppState, id: string) => {
-  const { all } = state;
-  const newAll = [...all];
-  const index = newAll.findIndex((character) => character.id === id);
-  if (index !== -1) {
-    newAll.splice(index, 1);
-  }
   state.all = newAll;
   return {...state};
 }
@@ -83,12 +69,8 @@ const reducer = (state: AppState = initialState, action: AppAction) => {
       return removeFavorite(state, action.payload);
     case FavoriteActionType.RemoveAll:
       return removeAllFavorities(state);
-    case AllActionType.GETALL:
-      return getAll(state);
     case AllActionType.SETALL:
       return setAll(state, action.payload);
-    case AllActionType.GETONE:
-      return getPersonByID(state, action.payload);
     case ThemeActionType.CHANGETHEME:
       return changeTheme(state);
     default:

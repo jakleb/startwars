@@ -17,7 +17,6 @@ query{
         diameter
         gravity
         population
-        id
       }
       species {
         name

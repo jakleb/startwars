@@ -1,4 +1,4 @@
-import { ContactFormData, Person } from "../types";
+import { Person } from "../types";
 
 export const convertFromCamelCase = (camelCaseString: string): string => {
     return camelCaseString.replace( /([a-z])([A-Z])/g, '$1 $2' ).toLowerCase();

@@ -9,16 +9,12 @@ export interface AppState{
 export enum FavoriteActionType {
   Add = "ADD",
   Remove = "REMOVE",
-  Show = "SHOW",
   RemoveAll = "REMOVEALL"
 }
 
 export enum AllActionType{
   GETALL = "GETALL",
   SETALL = "SETALL",
-  GETONE = "GETONE",
-  GETPAGE = "GETPAGE",
-  FINDBYSEARCH = "FINDBYSEARCH"
 }
 
 export enum ThemeActionType{
@@ -33,24 +29,10 @@ interface GetALLAction{
   type: AllActionType.GETALL;
 }
 
-interface GetOneAction{
-  type: AllActionType.GETONE,
-  payload: string;
-}
 
 interface SetAllAction{
   type: AllActionType.SETALL,
   payload: Person[];
-}
-
-interface GetPageAction{
-  type: AllActionType.GETPAGE,
-  payload: number;
-}
-
-interface SearchAction{
-  type: AllActionType.GETPAGE,
-  payload: string;
 }
 
 interface AddFavoriteAction {
@@ -67,16 +49,11 @@ interface RemoveAllFavoritiesAction {
   type: FavoriteActionType.RemoveAll;
 }
 
-interface ShowFavoriteAction {
-  type: FavoriteActionType.Show;
-}
-
 export type FavoriteAction =
   | AddFavoriteAction
   | RemoveFavoriteAction
-  | ShowFavoriteAction
   | RemoveAllFavoritiesAction;
 
-  export type ALLAction = GetALLAction | GetOneAction | SetAllAction | SearchAction | GetPageAction;
+  export type ALLAction = GetALLAction | SetAllAction;
 
   export type AppAction = FavoriteAction | ALLAction | ChangeThemeAction;
