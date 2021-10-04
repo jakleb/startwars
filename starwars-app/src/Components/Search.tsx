@@ -17,7 +17,6 @@ export const Search = () => {
   useEffect(() => {
     if(position.top && position.left){
       setFilterIsOpen(true);
-      console.log(position);
     }
   }, [position.left, position.top]);
 

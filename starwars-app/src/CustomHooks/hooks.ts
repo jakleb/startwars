@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import { LOAD_ALL_FILMS, LOAD_STARWARS_CHARACTERS } from "../GraphQL/Queries";
 import { actionCreators, State } from "../state";
-import { Films, Person, QueryFilms, QueryPeople, UrlAppInfoProps } from "../types";
+import { Films, Person, QueryFilms, QueryPeople, UrlAppInfoProps, URLQueryParams } from "../types";
 import { bindActionCreators } from "redux";
 
 export const useStarWarsApi = (pageNumber: number) => {
@@ -12,14 +12,14 @@ export const useStarWarsApi = (pageNumber: number) => {
     const { addAll } = useAppStore();
 
     const {error, loading, data} = useQuery<QueryPeople>(LOAD_STARWARS_CHARACTERS);
-    let people = useRef<Person[]>();
+    let {current} = useRef<Person[]>();
   
     useEffect(() => {
       if(error){
         console.log(`Error! ${error}`)
       }
-      if(data?.allPeople && !people.current?.length){
-        people.current = data?.allPeople.people;
+      if(data?.allPeople && !current?.length){
+        current = data?.allPeople.people;
         addAll(data?.allPeople?.people || []);
       }
     }, [pageNumber,loading]);
@@ -52,7 +52,7 @@ export const useStarWarsApi = (pageNumber: number) => {
         replace: history.replace,
         pathname: location.pathname,
         query: {
-           ...params
+           ...params as URLQueryParams
         },
         match,
         location,
@@ -89,7 +89,7 @@ export const useStarWarsApi = (pageNumber: number) => {
     const hasFilter: boolean = search.startsWith("?filmtitle")
     const isFavoritesPage = pathname.includes("favorites");
     const characters = isFavoritesPage ? favorites : all;
-    const filter = hasFilter ? search.replace("?filmtitle=",'') : null;
+    const filter = hasFilter ? decodeURI(search.replace("?filmtitle=",'')) : null;
     return {filter, characters, isFavoritesPage}
   }
 

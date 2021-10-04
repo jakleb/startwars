@@ -17,13 +17,10 @@ export const CharacterCard = ({ id, name, ...fields}: Person) => {
   };
 
   useEffect(() => {
-    const isFavoriteInState = favorites.findIndex(
-      (character) => character.name === name
-    );
+    const isFavoriteInState = favorites.findIndex(({name:currentName}) => currentName === name);
     setIsFavourite(isFavoriteInState !== -1 ?? false);
-  }, [favorites, id]);
+  }, [favorites.length,id]);
 
-  //useEffect(() => {}, [isFavourite]);
 
   const onAddToFavourites = (e: MouseEvent<SVGAElement>) => {
     setIsFavourite(!isFavourite);

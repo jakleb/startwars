@@ -48,14 +48,11 @@
                     padding: 3px;
 
                     &:hover{
-                        border: 1px solid #63efe8;
                         outline: none;
                     }
 
                     &:focus{
-                        border: 1px solid #63efe8;
                         outline: none;
-                        box-shadow: 1px 1px 7px -1px #63efe8;
                     }
                 }
             
@@ -68,6 +65,11 @@
                     height: 60px;
                     resize: none;
                 }
+            }
+
+            .btn-container{
+                display: flex;
+                justify-content: center;
             }
         }
     }

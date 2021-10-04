@@ -16,7 +16,8 @@ query{
         name
         diameter
         gravity
-        population  
+        population
+        id
       }
       species {
         name

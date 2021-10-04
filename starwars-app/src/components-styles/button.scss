@@ -47,3 +47,18 @@ $error-dark-color: #980c0c!default;
       background-color: $error-dark-color;
     }
   }
+
+  .custom-primary-btn{
+    @extend .custom-btn;
+    background-color:#0f82e5;
+    border-color:#106cbb;
+  
+    &:hover{
+      background-color: #106cbb;
+    }
+
+    &[disabled]{
+      background-color: #81bff5;
+      border-color:#81bff5;
+    }
+}

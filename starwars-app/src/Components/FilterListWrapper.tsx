@@ -7,6 +7,7 @@ export const FilterListWrapper = () => {
     const router = useRouter();
 
     const [currentChexbox, setCurrentCheckBox] = useState<HTMLInputElement>();
+    const { filter } = useCharacrterListData();
 
     const addFilterToUrl = useCallback(() => {
         if (currentChexbox) {
@@ -16,6 +17,7 @@ export const FilterListWrapper = () => {
                 router.push(`${currentPath + filter}`) : router.push(`${currentPath.replace(filter, "")}`)
         };
     }, [currentChexbox, router])
+
 
     useEffect(() => {
         if(currentChexbox){

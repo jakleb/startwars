@@ -118,3 +118,16 @@
     margin-bottom: 5px;
   }
 
+  .filter-row{
+    display: flex;
+    margin-bottom: 10px;
+    div{
+      &:first-child{
+        margin-left: 5px;
+      }
+
+      :last-child{
+        margin-left: 5px;
+      }
+    }
+  }

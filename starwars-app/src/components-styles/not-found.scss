@@ -1,0 +1,20 @@
+.not-found-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    
+    .not-found-container{
+        display: flex;
+        background-color: #f9dfdf;
+        border: 1px solid #fb9292;
+        border-radius: 5px;
+        flex-direction: column;
+        padding: 20px;
+
+        .sad-icon{
+            color: #eb4a6f;
+            font-size: 50px;
+        }
+    }
+}

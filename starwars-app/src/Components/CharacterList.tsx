@@ -24,6 +24,7 @@ export const CharacterList = ({match}: UrlMatch) => {
   const router = useRouter();
   const { value: searchValue } = useContext(SearchContext);
 
+
   useEffect(() => {
     if(charactersData?.length){
       setTotalCount(charactersData.length);
@@ -62,10 +63,11 @@ export const CharacterList = ({match}: UrlMatch) => {
       }
       </div>
       <div className="commentBox">
-        { (!!characters.length && characters.length > 1) && <ReactPaginate
+        { (!!characters.length && charactersData?.length > 10) && <ReactPaginate
           previousLabel={<BiChevronLeft />}
           nextLabel={<BiChevronRight />}
           breakLabel={"..."}
+          forcePage={pageId ? Number.parseInt(pageId, 10) - 1 : undefined}
           breakClassName={"break-me"}
           pageCount={characters && totalCount ? Math.ceil(totalCount / 10) : 0}
           marginPagesDisplayed={1}

@@ -32,6 +32,23 @@
             }     
         }
     }
+
+    .control-wrapper{
+        label{
+            color:#818181;
+        }
+        input{
+            background-color: #dddddd;
+            &:focus{
+                border-color: #09a199!important;
+                box-shadow: 1px 1px 7px -1px #0bbbb2;
+            }
+
+            &:hover{
+                border: #09a199;
+            }
+        }
+    }
 }
 .theme-light{
     background-color: white;
@@ -66,6 +83,19 @@
                 cursor: pointer;
                 background-color: #d2bfbf;
               } 
+        }
+    }
+
+    .control-wrapper{
+        input{
+            &:focus{
+                border-color: #63efe8!important;
+                box-shadow: 1px 1px 7px -1px #63efe8;
+            }
+
+            &:hover{
+                border: 1px solid #63efe8!important;
+            }
         }
     }
 }

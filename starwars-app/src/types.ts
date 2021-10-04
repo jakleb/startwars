@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ChangeEvent, InputHTMLAttributes, MouseEvent, Props, ReactChild, ReactFragment, ReactPortal, TextareaHTMLAttributes } from "react";
+import { UseFormRegister } from "react-hook-form";
 import { JsxElement } from "typescript";
 
 export interface QueryPeople {
@@ -28,6 +29,7 @@ export interface Person {
     diameter: number;
     gravity: string;
     population: number;
+    id: string;
   }
 
   export interface ModalProps {
@@ -73,7 +75,11 @@ export interface Person {
 }
 
   export interface UrlMatch {
-      match: { params: { pageid: string; personid: string, filter: string } };
+      match: { params: URLQueryParams };
+  }
+
+  export interface URLQueryParams {
+    pageid: string; personid: string, filter: string
   }
 
   export enum ButtonKind {
@@ -108,6 +114,7 @@ export interface Person {
 
   export interface FilterModalListProps{
     onSelectTilte: (element: HTMLInputElement) => void;
+    //setCurrentRef: (element: HTMLInputElement) => void;
   }
   
   export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -117,6 +124,8 @@ export interface Person {
     name?: string;
     error?: string;
     type: "textarea";
+    // register: UseFormRegister<ContactFormData>;
+    // fieldName: "firstName" | "lastName" | "email" | "postalCode" | "phoneNumber" | "message";
   }
   
   export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -125,7 +134,23 @@ export interface Person {
     labelClassName?: string;
     name?: string;
     error?: string;
+    register:  UseFormRegister<ContactFormData>;
+    // register: UseFormRegister<ContactFormData>;
   }
+
+  export interface InputWrapperProps {
+    children?:  boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
+    label?: string;
+    fluid?: boolean;
+    labelClassName?: string;
+    name?: string;
+    error?: string;
+    type?: string;
+    fieldName?: ContactFormDataFieldType
+  }
+
+  export type ContactFormDataFieldType =  "firstName" | "lastName" | "email" | "postalCode" | "phoneNumber" | "message";
+
 
   export interface ContactFormData {
     firstName: string;

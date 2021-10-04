@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ButtonKind, ContactFormData } from "../types";
 import { Button } from "./Button";
-import Input from "./Input";
+import InputWrapper from "./InputWrapper";
 
 export enum ControlTypes{
     Edit, Telephone, Checkbox, Mail, 
@@ -10,17 +10,11 @@ export enum ControlTypes{
 
 export const ContactForm = () => {
 
-    //const { register, handleSubmit, watch, formState: { errors }} = useForm<Inputs>();
-
     const { register, handleSubmit, formState: { isValid, errors } } = useForm<ContactFormData>({
         mode: 'onChange',
     });
 
     const firstControlRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        firstControlRef.current?.focus();
-    }, [])
 
     const onSubmit: SubmitHandler<ContactFormData> = (data) => {
         alert(JSON.stringify(data));
@@ -34,51 +28,47 @@ export const ContactForm = () => {
                         <h1>Contact form</h1>
                     </div>
                     <div className="form-content">
-                        <Input
-                            label="Name:"
-                            type="text"
-                            error={errors?.firstName?.message}
-                            {...register('firstName', { required: 'to pole jest wymagane' })}
-                        />
-                        <Input
-                            label={"Surname:"}
-                            type="text"
-                            error={errors?.lastName?.message}
-                            {...register('lastName')}
-                        />
-                        <Input
-                            label={"E-mail:"}
-                            error={errors?.email?.message}
-                            type="email"
-                            {...register('email')}
-                        />
-                        <Input
-                            label={"Postal code:"}
-                            error={errors?.postalCode?.message}
-                            type="text"
-                            placeholder="11-111" 
-                            pattern="[0-9]{2}-[0-9]{3}"
-                            {...register('postalCode')}
-                        />
-                        <Input
-                            label={"Phone namber:"}
-                            error={errors?.phoneNumber?.message}
-                            type="tel"
-                            placeholder="123456789" 
-                            pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
-                            {...register('phoneNumber')}
-                        />
-                        <Input
-                            label={"Message:"}
-                            type="textarea"
-                            {...register('phoneNumber')}
-                        />
-                        {/* {
-                           Object.entries(contactFormData).map(([fieldName, options]) => {
-                               register('fieldName')
-                            return <Input {...options} {...register(fieldName, {})}/>
-                            })
-                        } */}
+                        <InputWrapper 
+                            error={errors.firstName?.message} 
+                            label={"Name"}>
+                            <input type="text" {...register("firstName", {required: "Name is required"})} />
+                        </InputWrapper>
+                        <InputWrapper 
+                            error={errors.lastName?.message} 
+                            label={"Surname"}>
+                            <input type="text" {...register("lastName", {required: "Surname is required"})} />
+                        </InputWrapper>
+                        <InputWrapper 
+                            error={errors.email?.message} 
+                            label={"E-mail"}>
+                            <input type="email" {...register("email", {required: "E-mail is required"})} />
+                        </InputWrapper>
+                        <InputWrapper 
+                            error={errors.postalCode?.message} 
+                            label={"Postal code"}>
+                            <input type="text" 
+                                   placeholder="12-345" 
+                                   {...register("postalCode", 
+                                        { required: "Postal code is required", 
+                                          pattern:{value: /[0-9]{2}-[0-9]{3}/,message:"Incorrect pattern"}})
+                                    } />
+                        </InputWrapper>
+                        <InputWrapper 
+                            error={errors.phoneNumber?.message} 
+                            label={"Phone number"} >
+                            <input type="tel" 
+                                   placeholder="123-456-789" 
+                                   {...register("phoneNumber", 
+                                        { required: "Phone number is required", 
+                                          pattern:{value:/[0-9]{3}-[0-9]{3}-[0-9]{3}/, message:"Incorrect pattern"}
+                                        })
+                                    } />
+                        </InputWrapper>
+                        <InputWrapper 
+                            error={errors.message?.message} 
+                            label={"Message"}>
+                            <textarea {...register("message")}></textarea>
+                        </InputWrapper>
                     </div>
                     <div className="btn-container">
                         <Button disabled={!isValid} type="submit" kind={ButtonKind.primary}>Send</Button>
